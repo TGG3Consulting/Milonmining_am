@@ -1,0 +1,35 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create('pages', function (Blueprint $table) {
+            $table->id();
+            $table->string('key')->unique();             // stable id: 'dashboard', 'roles'
+            $table->string('label');                     // display name
+            $table->string('path');                      // FE route: '/roles'
+            $table->string('icon')->nullable();          // optional FE icon name
+            $table->json('permissions')->nullable();     // ['roles.view', ...]
+            $table->unsignedInteger('sort')->default(0); // order within siblings
+            $table->foreignId('parent_id')->nullable()->constrained('pages')->nullOnDelete();
+            $table->boolean('is_active')->default(true);
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('pages');
+    }
+};
