@@ -1,0 +1,70 @@
+{
+  "brand": { "name": "Admin Portal" },
+  "auth": {
+    "title": "Sign in",
+    "subtitle": "Sign in to continue",
+    "email": "Email",
+    "password": "Password",
+    "show": "Show",
+    "hide": "Hide",
+    "signin": "Sign in",
+    "signingIn": "Signing in…",
+    "signedIn": "You’re signed in.",
+    "failed": "Login failed"
+  },
+  "footer": {
+    "help": "Need help?",
+    "copyright": "© {year} Admin Portal"
+  },
+  "ui": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "close": "Close",
+    "active": "Active",
+    "inactive": "Inactive",
+    "loading": "Loading…",
+    "empty": "No data",
+    "search": "Search…"
+  },
+  "pagesAdmin": {
+    "title": "Pages",
+    "searchPlaceholder": "Search pages…",
+    "new": "New Page",
+    "saveOrder": "Save Order",
+    "columns": {
+      "sort": "Sort",
+      "label": "Label",
+      "path": "Path",
+      "permissions": "Permissions"
+    },
+    "childTag": "child",
+    "addChildTo": "Add child to {label}",
+    "confirmDelete": "Delete this page?",
+    "noResults": "No results"
+  },
+  "pageForm": {
+    "edit": "Edit Page",
+    "create": "Create Page",
+    "sections": {
+      "basics": "Basics",
+      "access": "Access",
+      "placement": "Placement & Status"
+    },
+    "key": "Key",
+    "label": "Label",
+    "path": "Path",
+    "icon": "Icon (optional)",
+    "permissions": "Permissions (comma separated)",
+    "parent": "Parent",
+    "sort": "Sort",
+    "active": "Active",
+    "hints": {
+      "key": "Unique identifier (e.g., dashboard)",
+      "path": "Frontend route path",
+      "icon": "Use a Heroicons name you map on the FE",
+      "none": "— none —"
+    },
+    "save": "Save",
+    "cancel": "Cancel"
+  }
+}
