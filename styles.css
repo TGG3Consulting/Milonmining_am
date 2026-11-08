@@ -7950,3 +7950,35 @@ body[data-page="parking"] .site-header:not(.is-scrolled) {
     aspect-ratio: 4 / 3;
   }
 }
+
+
+/* ---- facade stage: show the whole elevation ---------------------------- */
+/* The stage was a fixed 720px tall box (1.86:1) while the renders are 16:9, */
+/* so object-fit: cover clipped the roofline. Matching the ratio and using   */
+/* contain keeps the whole building visible, and the floor polygons use      */
+/* preserveAspectRatio="meet" so they stay registered with the photo.        */
+.floor-stage {
+  min-height: 0;
+}
+
+.facade-view {
+  height: auto;
+  min-height: 0;
+  aspect-ratio: 16 / 9;
+}
+
+.facade-view > img,
+.facade-image-stage > img,
+.facade-image-stage--mapped > img {
+  object-fit: contain;
+  object-position: center;
+}
+
+@media (max-width: 700px) {
+  /* a phone-width 16:9 stage is short, so give the floor rail room */
+  .facade-view {
+    height: auto;
+    min-height: 0;
+    aspect-ratio: 4 / 3;
+  }
+}

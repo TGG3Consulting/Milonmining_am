@@ -335,24 +335,27 @@
   }
 
   function facadeFloors(p,floorList) {
-    // The polygons were traced over the original facade photographs. Those
-    // photos are not published yet, so the facade now shows a CRM render the
-    // coordinates do not match - the overlay stays off until real facade
-    // photos come back (flip facadeOverlay in site-data.js to re-enable).
     if(!D.facadeOverlay)return "";
     const f=window.MILON_FACADES&&window.MILON_FACADES[p.key];
     if(!f)return "";
-    // размеченные полигоны используем только если покрыт каждый этаж проекта,
-    // иначе часть этажей стала бы недоступной — тогда остаётся обычная рейка
-    if(!floorList.every(n=>f.floors[n]))return "";
+    // Draw whatever the render covers. Floors it does not show keep their
+    // button on the rail, so none of them become unreachable.
+    const mapped=floorList.filter(n=>f.floors[n]);
+    if(!mapped.length)return "";
     const word=lang==="ru"?"этаж":"հարկ";
-    const shapes=floorList.map(n=>{
+    const shapes=mapped.map(n=>{
       const points=f.floors[n].map(pt=>pt.join(",")).join(" ");
       return `<polygon class="facade-floor" points="${points}" data-floor="${n}" tabindex="0" role="button" aria-label="${n} ${word}"><title>${n} ${word}</title></polygon>`;
     }).join("");
-    // slice — это SVG-аналог object-fit: cover, которым выводится фотография,
-    // поэтому слой обрезается ровно так же и совпадает с ней
-    return `<svg class="facade-floors" viewBox="0 0 ${f.w} ${f.h}" preserveAspectRatio="xMidYMid slice">${shapes}</svg>`;
+    // meet mirrors object-fit: contain on the photo, so the overlay is scaled
+    // and letterboxed exactly like the image at any stage size
+    return `<svg class="facade-floors" viewBox="0 0 ${f.w} ${f.h}" preserveAspectRatio="xMidYMid meet">${shapes}</svg>`;
+  }
+
+  // true when every floor of the project is clickable on the render itself
+  function facadeCoversAll(p,floorList) {
+    const f=window.MILON_FACADES&&window.MILON_FACADES[p.key];
+    return !!f && floorList.every(n=>f.floors[n]);
   }
 
   function floorStage(p,{catalog=false}={}) {
@@ -361,8 +364,10 @@
     if (!floorList.length) return "";
     const floorButtons=floorList.map((n,index)=>{const y=catalog&&p.key==="tower"?(27+index*(62/14)).toFixed(3):"";return `<button type="button" data-floor="${n}" ${y?`style="--floor-y:${y}%"`:""} aria-label="${n} ${lang==="ru"?"этаж":"հարկ"}"><span>${n}</span><i>${lang==="ru"?"этаж":"հարկ"}</i></button>`;}).join("");
     const overlay=facadeFloors(p,floorList);
+    const rail=`<div class="floor-rail" aria-label="${t("chooseFloor")}">${floorButtons}</div>`;
+    const railWithOverlay=D.facadeOverlay&&facadeCoversAll(p,floorList)?"":rail;
     const facadeContent=overlay
-      ?`<div class="facade-image-stage facade-image-stage--mapped" aria-label="${t("chooseFloor")}"><img src="${a(p.facade)}" alt="${p.name}">${overlay}</div>`
+      ?`<div class="facade-image-stage facade-image-stage--mapped" aria-label="${t("chooseFloor")}"><img src="${a(p.facade)}" alt="${p.name}">${overlay}${railWithOverlay}</div>`
       :(catalog?`<div class="facade-image-stage"><img src="${a(p.facade)}" alt="${p.name}"><div class="floor-rail" aria-label="${t("chooseFloor")}">${floorButtons}</div></div>`:`<img src="${a(p.facade)}" alt="${p.name}"><div class="floor-rail" aria-label="${t("chooseFloor")}">${floorButtons}</div>`);
     return `<div class="floor-stage" data-floor-stage data-project="${p.key}" data-catalog-scheme="${catalog}"><div class="facade-view">${facadeContent}<div class="facade-caption"><span>${p.name}</span><strong>${t("chooseFloor")}</strong></div></div></div>`;
   }
