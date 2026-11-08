@@ -7953,18 +7953,32 @@ body[data-page="parking"] .site-header:not(.is-scrolled) {
 
 
 /* ---- facade stage: show the whole elevation ---------------------------- */
-/* The stage was a fixed 720px tall box (1.86:1) while the renders are 16:9, */
-/* so object-fit: cover clipped the roofline. Matching the ratio and using   */
-/* contain keeps the whole building visible, and the floor polygons use      */
+/* The stage used to be a fixed-height box while the renders are 16:9, so    */
+/* object-fit: cover clipped the roofline. It is now width-driven at 16/9    */
+/* with object-fit: contain, and the floor polygons use                      */
 /* preserveAspectRatio="meet" so they stay registered with the photo.        */
-.floor-stage {
+.floor-stage,
+.facade-view {
+  height: auto;
   min-height: 0;
 }
 
 .facade-view {
+  aspect-ratio: 16 / 9;
+  margin-inline: auto;
+}
+
+/* the catalog scheme pinned the height, which left the block narrower than
+   its container and a band of empty space beside it */
+body[data-page="catalog"] .catalog-scheme-view .floor-stage,
+body[data-page="catalog"] .catalog-scheme-view .facade-view {
   height: auto;
   min-height: 0;
+}
+
+body[data-page="catalog"] .catalog-scheme-view .facade-view {
   aspect-ratio: 16 / 9;
+  margin-inline: auto;
 }
 
 .facade-view > img,
@@ -7974,11 +7988,28 @@ body[data-page="parking"] .site-header:not(.is-scrolled) {
   object-position: center;
 }
 
-@media (max-width: 700px) {
+/* The rail is a full-size positioning layer. Once floors are clickable on the
+   render itself it would swallow every hover, so only its buttons take input. */
+.floor-rail--residual {
+  pointer-events: none;
+}
+
+.floor-rail--residual button {
+  pointer-events: auto;
+}
+
+@media (max-width: 760px) {
   /* a phone-width 16:9 stage is short, so give the floor rail room */
-  .facade-view {
+  .floor-stage,
+  .facade-view,
+  body[data-page="catalog"] .catalog-scheme-view .floor-stage,
+  body[data-page="catalog"] .catalog-scheme-view .facade-view {
     height: auto;
     min-height: 0;
+  }
+
+  .facade-view,
+  body[data-page="catalog"] .catalog-scheme-view .facade-view {
     aspect-ratio: 4 / 3;
   }
 }
