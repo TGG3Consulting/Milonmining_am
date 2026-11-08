@@ -37,7 +37,7 @@
       "media/hills-poster.jpg": "https://api.milonmining.am/storage/buildings/1/2b7af357-685b-45d4-be63-50028a12c48f.png",
       "media/tower-poster.jpg": "https://api.milonmining.am/storage/buildings/3/c484ab1d-8eaa-42f7-ab1e-a2d528914701.jpg",
       "milon-hills-fasad.jpg": "assets/milon-hills-fasad.jpg",
-      "milon-plaza.jpg": "https://api.milonmining.am/storage/buildings/2/73b1d901-880d-499a-a4f1-bb0e1f3f38ae.webp",
+      "milon-plaza.jpg": "https://api.milonmining.am/storage/buildings/2/bfe7f8a8-62ca-43d5-866f-9b189d2f1ee5.webp",
       "milon-tower-fasad.jpg": "assets/milon-tower-fasad.jpg",
       "milon-tower-front.jpg": "assets/milon-tower-fasad.jpg",
       "okr-plaza.jpg": "https://api.milonmining.am/storage/buildings/2/955e2667-0424-4f3a-8362-ea3de2809f4e.webp",
