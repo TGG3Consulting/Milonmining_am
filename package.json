@@ -1,0 +1,14 @@
+{
+  "name": "milon-mining-static-site",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node build.mjs",
+    "dev": "vite"
+  },
+  "displayName": "Milon Mining",
+  "devDependencies": {
+    "vite": "^7.1.3"
+  }
+}
