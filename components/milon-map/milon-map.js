@@ -142,4 +142,22 @@
   }
 
   window.MilonMap = { create };
+
+  // Self-bootstrap: site.js only calls create() for containers that exist at the
+  // moment it binds, so if this file happens to load after site.js the map would
+  // never be built. Claim any container that is still unclaimed.
+  const bootstrap = () => {
+    document.querySelectorAll("[data-milon-map]").forEach(container => {
+      if (container.__milonMap) return;
+      create(container, { lang: container.dataset.lang });
+    });
+  };
+
+  // bootstrap() is idempotent, so run it both now (in case site.js already
+  // rendered) and once the document is parsed (in case it has not).
+  bootstrap();
+  if (document.readyState !== "complete") {
+    document.addEventListener("DOMContentLoaded", bootstrap, { once: true });
+    window.addEventListener("load", bootstrap, { once: true });
+  }
 })();
