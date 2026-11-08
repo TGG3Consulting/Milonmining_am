@@ -7947,6 +7947,6 @@ body[data-page="parking"] .site-header:not(.is-scrolled) {
 @media (max-width: 760px) {
   /* one narrow column: give the overlaid title and buttons more room */
   .project-card__surface {
-    aspect-ratio: 3 / 2;
+    aspect-ratio: 4 / 3;
   }
 }
