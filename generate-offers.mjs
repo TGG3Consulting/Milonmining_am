@@ -10,6 +10,9 @@ import { fileURLToPath } from "node:url";
 import path from "node:path";
 
 const __dir = path.dirname(fileURLToPath(import.meta.url));
+
+// cache-busting token; keep in step with the root pages
+const ASSET_V = 21;
 const LANGS = ["hy", "ru"];
 
 // site-data.js is an IIFE that assigns window.MILON_DATA
@@ -34,15 +37,18 @@ function shell({ lang, title, description, canonical, alternates, page, offerId,
   <meta name="description" content="${esc(description)}">
   <meta name="theme-color" content="#f2efe7">
   <title>${esc(title)}</title>
+  <link rel="icon" href="/assets/favicon.ico" sizes="any">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+  <link rel="manifest" href="/assets/site.webmanifest">
   <link rel="canonical" href="${canonical}">
 ${alternates.map(a => `  <link rel="alternate" hreflang="${a.lang}" href="${a.href}">`).join("\n")}
   <meta property="og:type" content="website">
   <meta property="og:title" content="${esc(title)}">
   <meta property="og:description" content="${esc(description)}">
   <meta property="og:url" content="${canonical}">
-  <link rel="stylesheet" href="${up}styles.css?v=7">
-  <script src="${up}site-data.js?v=7" defer></script>
-  <script src="${up}site.js?v=7" defer></script>
+  <link rel="stylesheet" href="${up}styles.css?v=${ASSET_V}">
+  <script src="${up}site-data.js?v=${ASSET_V}" defer></script>
+  <script src="${up}site.js?v=${ASSET_V}" defer></script>
 </head>
 <body data-page="${page}" data-lang="${lang}"${offerId ? ` data-offer="${esc(offerId)}"` : ""}>
   <div id="app"></div>
