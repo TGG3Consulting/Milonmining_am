@@ -3,6 +3,9 @@
 
   window.MILON_DATA = {
     assetRoot,
+    // facades.js polygons are traced over the original facade photos, which are
+    // not published; set to true once those photos are restored.
+    facadeOverlay: false,
     assetMap: {
       "am-1.jpg": "https://api.milonmining.am/storage/buildings/3/c484ab1d-8eaa-42f7-ab1e-a2d528914701.jpg",
       "am-2.jpg": "https://api.milonmining.am/storage/buildings/1/2b7af357-685b-45d4-be63-50028a12c48f.png",

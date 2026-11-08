@@ -7875,3 +7875,62 @@ body[data-page="parking"] .site-header:not(.is-scrolled) {
 .project-build-badge--ready {
   background: rgba(0,163,135,.82);
 }
+
+
+/* ---- catalog facade scheme: project switcher ---------------------------- */
+/* The scheme used to be Tower-only; it now switches between projects.       */
+.catalog-scheme-switch {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.catalog-scheme-switch button {
+  min-height: 44px;
+  padding: 10px 18px;
+  border: 1px solid rgba(29, 40, 62, 0.18);
+  border-radius: 10px;
+  background: #ffffff;
+  color: #1d283e;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  line-height: 1.25;
+}
+
+.catalog-scheme-switch button:hover {
+  border-color: rgba(0, 163, 135, 0.45);
+}
+
+.catalog-scheme-switch button.is-active {
+  border-color: #00a387;
+  background: #00a387;
+  color: #ffffff;
+}
+
+.catalog-scheme-note {
+  max-width: 650px;
+  margin: 0 0 16px;
+  color: #596276;
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.catalog-scheme-note strong {
+  color: #00a387;
+}
+
+@media (max-width: 720px) {
+  .catalog-scheme-switch {
+    gap: 6px;
+  }
+
+  .catalog-scheme-switch button {
+    flex: 1 1 calc(50% - 6px);
+    min-height: 42px;
+    padding-inline: 10px;
+    font-size: 11px;
+  }
+}

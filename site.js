@@ -12,6 +12,7 @@
   let lang = ["hy", "ru"].includes(forcedLang) ? forcedLang : (["hy", "ru"].includes(query.get("lang")) ? query.get("lang") : localStorage.getItem("milon-language") || "hy");
   const CATALOG_PAGE_SIZE = 12;
   let catalogPageNumber = Math.max(1, Number.parseInt(query.get("page") || "1", 10) || 1);
+  let catalogSchemeProject = "";
 
   const C = {
     hy: {
@@ -283,11 +284,28 @@
     return visible.length?visible.map(unitRow).join(""):`<div class="empty-state">${t("empty")}</div>`;
   }
 
+  // Projects the facade scheme can show: only those with published inventory.
+  function schemeProjects() {
+    return Object.values(D.projects).filter(p=>D.units.some(u=>u.project===p.key));
+  }
+
+  // The scheme used to be hard-coded to Milon Tower, so the catalog showed the
+  // Tower facade whichever project you picked. It now follows the selection.
+  function catalogSchemeView() {
+    const list=schemeProjects();
+    if(!list.length)return "";
+    const current=list.find(p=>p.key===catalogSchemeProject)||list[0];
+    catalogSchemeProject=current.key;
+    const tabs=list.map(p=>`<button type="button" class="${p.key===current.key?"is-active":""}" data-scheme-project="${p.key}" aria-pressed="${p.key===current.key}">${esc(p.name)}</button>`).join("");
+    return `<div class="catalog-scheme-switch" role="group" aria-label="${t("towerChooseT")}">${tabs}</div><p class="catalog-scheme-note"><strong>${esc(current.name)}</strong> · ${t("catalogSchemeIntro")}</p><div data-scheme-stage>${floorStage(current,{catalog:true})}</div>`;
+  }
+
   function catalogPage() {
     const initial=filters(), units=sortCatalogUnits(filterUnits(initial));
+    if(initial.project && initial.project!=="all" && D.projects[initial.project]) catalogSchemeProject=initial.project;
     catalogPageNumber=Math.min(Math.max(1,Math.ceil(units.length/CATALOG_PAGE_SIZE)),catalogPageNumber);
-    const catalogTabs=`<div class="catalog-tower-tools" data-tower-catalog-tools><div class="catalog-view-switch" role="tablist" aria-label="${t("towerChooseT")}"><button class="is-active" type="button" role="tab" aria-selected="true" aria-controls="catalog-scheme" data-catalog-view="scheme">${t("catalogMapMode")}</button><button type="button" role="tab" aria-selected="false" aria-controls="catalog-list" tabindex="-1" data-catalog-view="list">${t("catalogMode")}</button></div><p><strong>Milon Tower</strong> · ${t("catalogSchemeIntro")}</p></div>`;
-    return `${header()}<main id="main"><section class="page-hero page-hero--catalog"><div class="page-shell"><span class="eyebrow">${t("catalogK")}</span><h1>${t("catalogT")}</h1><p>${t("catalogP")}</p></div></section><section class="catalog-section section-pad"><div class="page-shell">${catalogTabs}<div data-catalog-list-view id="catalog-list" role="tabpanel" hidden><section class="catalog-filter-panel" aria-labelledby="catalog-filter-title"><h2 id="catalog-filter-title">${t("catalogFilters")}</h2>${finder("catalog",initial)}</section><section class="catalog-results" aria-live="polite"><div class="catalog-toolbar"><p><span>${t("found")}</span> <strong data-catalog-count>${units.length}</strong> ${t("apt")}</p><label><span>${t("sort")}</span><select data-sort><option value="floor-desc">${t("sortFloor")}</option><option value="price-asc">${t("sortPrice")}</option><option value="area-asc">${t("sortArea")}</option></select></label></div><div class="unit-list" data-unit-list>${catalogCards(units)}</div><div data-catalog-pagination-root>${catalogPagination(units.length)}</div></section></div><div class="catalog-scheme-view" id="catalog-scheme" role="tabpanel" data-catalog-scheme-view>${floorStage(D.projects.tower,{catalog:true})}</div></div></section>${contactSection()}</main>${footer()}${dialogs()}`;
+    const catalogTabs=`<div class="catalog-tower-tools" data-tower-catalog-tools><div class="catalog-view-switch" role="tablist" aria-label="${t("towerChooseT")}"><button class="is-active" type="button" role="tab" aria-selected="true" aria-controls="catalog-scheme" data-catalog-view="scheme">${t("catalogMapMode")}</button><button type="button" role="tab" aria-selected="false" aria-controls="catalog-list" tabindex="-1" data-catalog-view="list">${t("catalogMode")}</button></div></div>`;
+    return `${header()}<main id="main"><section class="page-hero page-hero--catalog"><div class="page-shell"><span class="eyebrow">${t("catalogK")}</span><h1>${t("catalogT")}</h1><p>${t("catalogP")}</p></div></section><section class="catalog-section section-pad"><div class="page-shell">${catalogTabs}<div data-catalog-list-view id="catalog-list" role="tabpanel" hidden><section class="catalog-filter-panel" aria-labelledby="catalog-filter-title"><h2 id="catalog-filter-title">${t("catalogFilters")}</h2>${finder("catalog",initial)}</section><section class="catalog-results" aria-live="polite"><div class="catalog-toolbar"><p><span>${t("found")}</span> <strong data-catalog-count>${units.length}</strong> ${t("apt")}</p><label><span>${t("sort")}</span><select data-sort><option value="floor-desc">${t("sortFloor")}</option><option value="price-asc">${t("sortPrice")}</option><option value="area-asc">${t("sortArea")}</option></select></label></div><div class="unit-list" data-unit-list>${catalogCards(units)}</div><div data-catalog-pagination-root>${catalogPagination(units.length)}</div></section></div><div class="catalog-scheme-view" id="catalog-scheme" role="tabpanel" data-catalog-scheme-view>${catalogSchemeView()}</div></div></section>${contactSection()}</main>${footer()}${dialogs()}`;
   }
 
   function offerProjectLinks(offer) {
@@ -317,6 +335,11 @@
   }
 
   function facadeFloors(p,floorList) {
+    // The polygons were traced over the original facade photographs. Those
+    // photos are not published yet, so the facade now shows a CRM render the
+    // coordinates do not match - the overlay stays off until real facade
+    // photos come back (flip facadeOverlay in site-data.js to re-enable).
+    if(!D.facadeOverlay)return "";
     const f=window.MILON_FACADES&&window.MILON_FACADES[p.key];
     if(!f)return "";
     // размеченные полигоны используем только если покрыт каждый этаж проекта,
@@ -477,6 +500,7 @@
     document.querySelectorAll("[data-carousel]").forEach(bindCarousel);
     document.querySelectorAll("[data-milon-map]").forEach(container=>{if(container.__milonMap)container.__milonMap.setLanguage(lang);else if(window.MilonMap)window.MilonMap.create(container,{lang,assetsBase:container.dataset.assets});});
     bindCatalogModes();
+    bindCatalogScheme();
     const catalogFinder=document.querySelector('[data-finder][data-mode="catalog"]');
     if(catalogFinder)syncCatalogTowerTools(catalogFinder);
   }
@@ -496,6 +520,24 @@
     tools.querySelectorAll("[data-catalog-view]").forEach(button=>{const active=button.dataset.catalogView===next;button.classList.toggle("is-active",active);button.setAttribute("aria-selected",String(active));button.tabIndex=active?0:-1;});
   }
 
+  function renderCatalogScheme() {
+    const view=document.querySelector("[data-catalog-scheme-view]");
+    if(!view)return;
+    view.innerHTML=catalogSchemeView();
+    bindCatalogScheme(); bindFloorButtons(view);
+  }
+
+  function bindCatalogScheme() {
+    document.querySelectorAll("[data-scheme-project]").forEach(button=>{
+      if(button.dataset.schemeBound)return; button.dataset.schemeBound="1";
+      button.addEventListener("click",()=>{
+        if(button.dataset.schemeProject===catalogSchemeProject)return;
+        catalogSchemeProject=button.dataset.schemeProject;
+        renderCatalogScheme();
+      });
+    });
+  }
+
   function bindCatalogModes() {
     document.querySelectorAll("[data-catalog-view]").forEach(button=>{if(button.dataset.bound)return;button.dataset.bound="1";button.addEventListener("click",()=>setCatalogMode(button.dataset.catalogView));button.addEventListener("keydown",event=>{if(!["ArrowLeft","ArrowRight","Home","End"].includes(event.key))return;event.preventDefault();const tabs=[...button.closest('[role="tablist"]')?.querySelectorAll('[role="tab"]')||[]];if(!tabs.length)return;const index=event.key==="Home"?0:event.key==="End"?tabs.length-1:(tabs.indexOf(button)+(event.key==="ArrowRight"?1:-1)+tabs.length)%tabs.length;tabs[index].focus();tabs[index].click();});});
   }
@@ -508,6 +550,8 @@
 
   function updateCatalog() {
     const form=document.querySelector('[data-finder][data-mode="catalog"]'),list=document.querySelector("[data-unit-list]");if(!form||!list)return;const sort=document.querySelector("[data-sort]")?.value||"floor-desc",units=sortCatalogUnits(filterUnits(readFilters(form)),sort),pages=Math.max(1,Math.ceil(units.length/CATALOG_PAGE_SIZE));catalogPageNumber=Math.min(pages,Math.max(1,catalogPageNumber));list.innerHTML=catalogCards(units);const count=document.querySelector("[data-catalog-count]");if(count)count.textContent=units.length;const pagination=document.querySelector("[data-catalog-pagination-root]");if(pagination)pagination.innerHTML=catalogPagination(units.length);const url=new URL(location.href);catalogPageNumber>1?url.searchParams.set("page",String(catalogPageNumber)):url.searchParams.delete("page");try{history.replaceState({},"",url);}catch(error){if(location.protocol!=="file:")throw error;}bindBookingButtons();bindMortgageButtons();bindUnitDetailButtons();bindUnitCardMedia();bindCatalogPagination();
+    const picked=readFilters(form).project;
+    if(picked && picked!=="all" && D.projects[picked] && picked!==catalogSchemeProject){catalogSchemeProject=picked;renderCatalogScheme();}
   }
 
   function bindCatalogPagination() {
