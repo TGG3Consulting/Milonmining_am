@@ -8013,3 +8013,50 @@ body[data-page="catalog"] .catalog-scheme-view .facade-view {
     aspect-ratio: 4 / 3;
   }
 }
+
+
+/* ---- residual floor rail ------------------------------------------------ */
+/* Only the floors the render does not show land here. The catalog's rail     */
+/* layout positions every button from a --floor-y custom property, which this */
+/* rail does not set, so it needs its own simple stacked layout.              */
+.floor-rail--residual,
+body[data-page="catalog"] .catalog-scheme-view .floor-rail--residual {
+  position: absolute;
+  z-index: 3;
+  top: 50%;
+  right: auto;
+  bottom: auto;
+  left: clamp(16px, 3%, 36px);
+  display: flex;
+  max-height: none;
+  flex-direction: column;
+  gap: 7px;
+  overflow: visible;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.floor-rail--residual button,
+body[data-page="catalog"] .catalog-scheme-view .floor-rail--residual button {
+  position: static;
+  top: auto;
+  left: auto;
+  width: 90px;
+  height: 56px;
+  min-height: 0;
+  transform: none;
+  pointer-events: auto;
+}
+
+.floor-rail--residual button:hover,
+body[data-page="catalog"] .catalog-scheme-view .floor-rail--residual button:hover {
+  transform: translateX(6px);
+}
+
+@media (max-width: 760px) {
+  .floor-rail--residual button,
+  body[data-page="catalog"] .catalog-scheme-view .floor-rail--residual button {
+    width: 72px;
+    height: 46px;
+  }
+}
