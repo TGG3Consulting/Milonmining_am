@@ -8060,3 +8060,79 @@ body[data-page="catalog"] .catalog-scheme-view .floor-rail--residual button:hove
     height: 46px;
   }
 }
+
+
+/* ---- facade floor hover -------------------------------------------------- */
+/* Rounded, glowing floor bands. The corners come from a thick round-joined    */
+/* stroke painted under the fill, and vector-effect keeps it the same weight   */
+/* on both buildings even though their viewBoxes differ (1280 vs 3840 wide).   */
+.facade-floors {
+  --facade-ease: cubic-bezier(0.22, 0.85, 0.28, 1);
+}
+
+.facade-floor {
+  fill: rgba(255, 255, 255, 0.035);
+  stroke: rgba(255, 255, 255, 0.26);
+  stroke-width: 2;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+  paint-order: stroke fill;
+  vector-effect: non-scaling-stroke;
+  cursor: pointer;
+  transform-box: fill-box;
+  transform-origin: center;
+  opacity: 1;
+  transition:
+    fill 0.26s var(--facade-ease),
+    stroke 0.26s var(--facade-ease),
+    stroke-width 0.26s var(--facade-ease),
+    opacity 0.26s var(--facade-ease),
+    transform 0.34s var(--facade-ease),
+    filter 0.34s var(--facade-ease);
+}
+
+/* hovering one floor quietly settles the others back */
+.facade-floors:hover .facade-floor {
+  opacity: 0.45;
+}
+
+.facade-floor:hover,
+.facade-floor:focus-visible,
+.facade-floor.is-selected,
+.facade-floors:hover .facade-floor:hover,
+.facade-floors:hover .facade-floor.is-selected {
+  fill: rgba(0, 176, 120, 0.34);
+  stroke: #2fe3ac;
+  stroke-width: 14;
+  opacity: 1;
+  transform: scale(1.006);
+  filter: drop-shadow(0 0 16px rgba(47, 227, 172, 0.45));
+  outline: none;
+}
+
+.facade-floor:active {
+  fill: rgba(0, 176, 120, 0.46);
+  transform: scale(0.998);
+  filter: drop-shadow(0 0 10px rgba(47, 227, 172, 0.55));
+  transition-duration: 0.09s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .facade-floor {
+    transition-duration: 0.01ms;
+  }
+
+  .facade-floor:hover,
+  .facade-floor:focus-visible,
+  .facade-floor.is-selected {
+    transform: none;
+  }
+}
+
+@media (max-width: 760px) {
+  .facade-floor:hover,
+  .facade-floor:focus-visible,
+  .facade-floor.is-selected {
+    stroke-width: 9;
+  }
+}
