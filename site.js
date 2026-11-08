@@ -380,12 +380,9 @@
     const floorButtons=buildFloorButtons(floorList,floorList,catalog,p);
     const overlay=facadeFloors(p,floorList);
     const rail=`<div class="floor-rail" aria-label="${t("chooseFloor")}">${floorButtons}</div>`;
-    // with an overlay the rail only carries the floors the render leaves out,
-    // so no floor is unreachable and the picture stays uncluttered
-    const leftOut=floorList.filter(n=>!facadeHasFloor(p,n));
-    const railWithOverlay=leftOut.length
-      ?`<div class="floor-rail floor-rail--residual" aria-label="${t("chooseFloor")}">${buildFloorButtons(leftOut,floorList,catalog,p)}</div>`
-      :"";
+    // once the floors are clickable on the render itself no rail is drawn -
+    // a lone leftover button floating over the facade only cluttered it
+    const railWithOverlay="";
     const facadeContent=overlay
       ?`<div class="facade-image-stage facade-image-stage--mapped" aria-label="${t("chooseFloor")}"><img src="${a(p.facade)}" alt="${p.name}">${overlay}${railWithOverlay}</div>`
       :(catalog?`<div class="facade-image-stage"><img src="${a(p.facade)}" alt="${p.name}"><div class="floor-rail" aria-label="${t("chooseFloor")}">${floorButtons}</div></div>`:`<img src="${a(p.facade)}" alt="${p.name}"><div class="floor-rail" aria-label="${t("chooseFloor")}">${floorButtons}</div>`);
