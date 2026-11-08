@@ -62,4 +62,8 @@ if (missing.length) {
   process.exit(1);
 }
 
+console.log("=== Pointing plans at the web-sized copies ===");
+const { optimizePlans } = await import("./optimize-plans.mjs");
+await optimizePlans(output);
+
 console.log(`dist ready: ${publicFiles.length} entries copied to ${output}`);
