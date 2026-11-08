@@ -354,18 +354,38 @@
 
   // true when every floor of the project is clickable on the render itself
   function facadeCoversAll(p,floorList) {
+    return floorList.every(n=>facadeHasFloor(p,n));
+  }
+
+  function facadeHasFloor(p,n) {
+    if(!D.facadeOverlay)return false;
     const f=window.MILON_FACADES&&window.MILON_FACADES[p.key];
-    return !!f && floorList.every(n=>f.floors[n]);
+    return !!(f&&f.floors[n]);
+  }
+
+  function buildFloorButtons(list,allFloors,catalog,p) {
+    const word=lang==="ru"?"этаж":"հարկ";
+    return list.map(n=>{
+      // the Tower catalog scheme pins each button to its floor on the photo
+      const index=allFloors.indexOf(n);
+      const y=catalog&&p.key==="tower"?(27+index*(62/14)).toFixed(3):"";
+      return `<button type="button" data-floor="${n}" ${y?`style="--floor-y:${y}%"`:""} aria-label="${n} ${word}"><span>${n}</span><i>${word}</i></button>`;
+    }).join("");
   }
 
   function floorStage(p,{catalog=false}={}) {
     const unitFloors=[...new Set(D.units.filter(u=>u.project===p.key).map(u=>u.floor))].sort((x,y)=>y-x);
     const floorList=catalog&&p.key==="tower"?Array.from({length:15},(_,index)=>16-index):unitFloors;
     if (!floorList.length) return "";
-    const floorButtons=floorList.map((n,index)=>{const y=catalog&&p.key==="tower"?(27+index*(62/14)).toFixed(3):"";return `<button type="button" data-floor="${n}" ${y?`style="--floor-y:${y}%"`:""} aria-label="${n} ${lang==="ru"?"этаж":"հարկ"}"><span>${n}</span><i>${lang==="ru"?"этаж":"հարկ"}</i></button>`;}).join("");
+    const floorButtons=buildFloorButtons(floorList,floorList,catalog,p);
     const overlay=facadeFloors(p,floorList);
     const rail=`<div class="floor-rail" aria-label="${t("chooseFloor")}">${floorButtons}</div>`;
-    const railWithOverlay=D.facadeOverlay&&facadeCoversAll(p,floorList)?"":rail;
+    // with an overlay the rail only carries the floors the render leaves out,
+    // so no floor is unreachable and the picture stays uncluttered
+    const leftOut=floorList.filter(n=>!facadeHasFloor(p,n));
+    const railWithOverlay=leftOut.length
+      ?`<div class="floor-rail floor-rail--residual" aria-label="${t("chooseFloor")}">${buildFloorButtons(leftOut,floorList,catalog,p)}</div>`
+      :"";
     const facadeContent=overlay
       ?`<div class="facade-image-stage facade-image-stage--mapped" aria-label="${t("chooseFloor")}"><img src="${a(p.facade)}" alt="${p.name}">${overlay}${railWithOverlay}</div>`
       :(catalog?`<div class="facade-image-stage"><img src="${a(p.facade)}" alt="${p.name}"><div class="floor-rail" aria-label="${t("chooseFloor")}">${floorButtons}</div></div>`:`<img src="${a(p.facade)}" alt="${p.name}"><div class="floor-rail" aria-label="${t("chooseFloor")}">${floorButtons}</div>`);
