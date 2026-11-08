@@ -43,9 +43,20 @@ function shell({ lang, title, description, canonical, alternates, page, offerId,
   <link rel="canonical" href="${canonical}">
 ${alternates.map(a => `  <link rel="alternate" hreflang="${a.lang}" href="${a.href}">`).join("\n")}
   <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Milon Mining">
+  <meta property="og:locale" content="${lang === "ru" ? "ru_RU" : "hy_AM"}">
   <meta property="og:title" content="${esc(title)}">
   <meta property="og:description" content="${esc(description)}">
   <meta property="og:url" content="${canonical}">
+  <meta property="og:image" content="${SITE}/assets/og-image.jpg">
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Milon Mining">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="${esc(title)}">
+  <meta name="twitter:description" content="${esc(description)}">
+  <meta name="twitter:image" content="${SITE}/assets/og-image.jpg">
   <link rel="stylesheet" href="${up}styles.css?v=${ASSET_V}">
   <script src="${up}site-data.js?v=${ASSET_V}" defer></script>
   <script src="${up}site.js?v=${ASSET_V}" defer></script>
