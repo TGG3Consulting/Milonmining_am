@@ -7934,3 +7934,20 @@ body[data-page="parking"] .site-header:not(.is-scrolled) {
     font-size: 11px;
   }
 }
+
+
+/* ---- project cards: stop cropping the facade renders ------------------- */
+/* The cards were 2.02:1 while the renders are 16:9, so object-fit: cover    */
+/* trimmed the roofline and the ground floor. Matching the ratio makes the   */
+/* card a little taller and shows the whole building.                        */
+.project-card__surface {
+  aspect-ratio: 16 / 9;
+  height: auto;
+}
+
+@media (max-width: 760px) {
+  /* a single narrow column needs more height for the overlaid title/buttons */
+  .project-card__surface {
+    aspect-ratio: 3 / 2;
+  }
+}
