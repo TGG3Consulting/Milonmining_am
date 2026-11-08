@@ -7936,29 +7936,17 @@ body[data-page="parking"] .site-header:not(.is-scrolled) {
 }
 
 
-/* ---- project cards: stop cropping the facade renders -------------------- */
-/* The cards rendered at 2.02:1 while the facade renders are 16:9, so        */
-/* object-fit: cover trimmed the roofline and the ground floor off every     */
-/* building. body[data-page="home"] sets the height from a container query,  */
-/* so the override has to match that specificity to win.                     */
-.project-card__surface,
-body[data-page="home"] .project-card__surface {
+/* ---- project cards on pages other than the home page -------------------- */
+/* The home page sets this in its own inline stylesheet; everywhere else the  */
+/* cards still need to match the 16:9 facade renders so nothing is cropped.   */
+.project-card__surface {
   height: auto;
   aspect-ratio: 16 / 9;
 }
 
-@media (max-width: 1020px) {
-  body[data-page="home"] .project-card__surface {
-    height: auto;
-    aspect-ratio: 16 / 9;
-  }
-}
-
 @media (max-width: 760px) {
   /* one narrow column: give the overlaid title and buttons more room */
-  .project-card__surface,
-  body[data-page="home"] .project-card__surface {
-    height: auto;
+  .project-card__surface {
     aspect-ratio: 3 / 2;
   }
 }

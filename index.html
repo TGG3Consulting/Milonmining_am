@@ -6,7 +6,7 @@
   <meta name="description" content="Milon Mining — բնակելի նախագծեր Աբովյանում և Առինջում։ Բնակարանների ընտրություն, նախագծեր և կապ։">
   <meta name="theme-color" content="#1d283e">
   <title>Milon Mining — բնակելի նախագծեր Հայաստանում</title>
-  <link rel="stylesheet" href="styles.css?v=11">
+  <link rel="stylesheet" href="styles.css?v=12">
   <style id="home-iteration-1">
     body[data-page="home"] {
       --ink: #1d283e;
@@ -140,8 +140,9 @@
     body[data-page="home"] .project-card__surface {
       position: relative;
       display: block;
-      /* Preserve the former three-card layout's height while widening the cards. */
-      height: calc((100cqw - 36px) / 4.44);
+      /* 16:9 matches the facade renders, so the roofline and the ground
+         floor are no longer cropped by object-fit: cover. */
+      aspect-ratio: 16 / 9;
       overflow: hidden;
       color: var(--white);
       background: var(--ink);
@@ -402,7 +403,7 @@
       }
 
       body[data-page="home"] .project-card__surface {
-        height: calc((100cqw - 16px) / 2.96);
+        aspect-ratio: 16 / 9;
       }
 
       body[data-page="home"] .project-card__top,
@@ -450,7 +451,9 @@
 
       body[data-page="home"] .project-card__surface {
         height: auto;
-        aspect-ratio: 1.08 / 1;
+        /* 1.08/1 cropped most of a wide facade away on phones; 3/2 keeps
+           enough height for the overlaid title and buttons. */
+        aspect-ratio: 3 / 2;
       }
 
       body[data-page="home"] .project-card__content strong {
