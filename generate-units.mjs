@@ -119,6 +119,8 @@ for (const building of buildings) {
       type:        'apartment',
       rooms:       apt.rooms       ?? null,
       area:        apt.square_meter ?? null,
+      // Only carried when the CRM says there is one; the price already includes it.
+      terrace:     apt.has_terrace && apt.terrace_area ? Number(apt.terrace_area) : null,
       floor:       apt.floor_level  ?? null,
       entrance:    null,
       totalFloors,
