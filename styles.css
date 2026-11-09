@@ -8138,3 +8138,40 @@ body[data-page="catalog"] .catalog-scheme-view .floor-rail--residual button:hove
 .lead-form .field--phone {
   grid-column: 1 / -1;
 }
+
+/* ---------------------------------------------------------------------------
+   Phone field: a country code to pick from, and a shorter line
+   The field keeps to a single grid column, so its underline ends exactly where
+   the name and surname ones do instead of running the full width of the form.
+   The code select and the number sit in one flex row and the wrapper draws the
+   line under both of them.
+--------------------------------------------------------------------------- */
+.lead-form .field--phone {
+  grid-column: auto;
+}
+
+.lead-form .phone-input {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 8px;
+  border-bottom: 1px solid #00a387;
+}
+
+.lead-form .phone-input select {
+  height: 52px;
+  flex: 0 0 auto;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  color: #00a387;
+  background: transparent;
+  cursor: pointer;
+  font: inherit;
+}
+
+.lead-form .phone-input input {
+  min-width: 0;
+  flex: 1 1 auto;
+  border-bottom: 0;
+}
