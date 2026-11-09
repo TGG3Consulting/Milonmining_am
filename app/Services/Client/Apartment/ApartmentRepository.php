@@ -23,6 +23,7 @@ class ApartmentRepository
         $queryBuilder = Apartment::query()
             ->select([
                 'apartments.id',
+                'apartments.number',
                 'apartments.status',
                 'apartments.floor_id',
                 'apartments.square_meter',
@@ -30,6 +31,9 @@ class ApartmentRepository
                 'apartments.discount',
                 'apartments.image',
                 'apartments.active_price',
+                'apartments.total_price',
+                'apartments.has_terrace',
+                'apartments.terrace_area',
                 'apartments.parent_image'
             ])
             ->join('floors as f', 'f.id', '=', 'apartments.floor_id')
@@ -45,10 +49,16 @@ class ApartmentRepository
                 $q->whereHas('floor', fn($qq) => $qq->where('level', $dto->floor_level));
             })
             ->with(['floor:id,level,price']);
-        $priceField = 'CASE
-        WHEN apartments.discount IS NOT NULL THEN (apartments.square_meter * COALESCE(apartments.active_price, 0)) * (1 - apartments.discount/100.0)
-        ELSE (apartments.square_meter * COALESCE(apartments.active_price, 0))
-     END';
+        // total_price is what the CRM quotes for the apartment, terrace included.
+        // The multiplication is only a fallback for the rows Bitrix does not
+        // carry at all (Milon Plaza), which would otherwise price at nothing.
+        // Sorting and the price filter have to use the same figure the card
+        // shows, so this expression and the mapper below must stay in step.
+        $priceBase = 'COALESCE(apartments.total_price, apartments.square_meter * COALESCE(apartments.active_price, 0))';
+        $priceField = "CASE
+        WHEN apartments.discount IS NOT NULL THEN ({$priceBase}) * (1 - apartments.discount/100.0)
+        ELSE ({$priceBase})
+     END";
         $priceFieldRaw = DB::raw($priceField);
         if (!is_null($dto->price_from) && !is_null($dto->price_to)) {
             $queryBuilder->whereBetween($priceFieldRaw, [$dto->price_from, $dto->price_to]);
@@ -86,6 +96,10 @@ class ApartmentRepository
 
         // keep meta/links; just map each item
         $paginator = $paginator->through(function ($apartment) use ($disk) {
+            $price = $apartment->total_price !== null
+                ? (float) $apartment->total_price
+                : $apartment->square_meter * $apartment->active_price;
+
             return [
                 'id' => $apartment->id,
                 'number' => $apartment->number,
@@ -94,9 +108,11 @@ class ApartmentRepository
                 'floor_level' => $apartment->floor->level,
                 'square_meter' => $apartment->square_meter,
                 'rooms' => $apartment->rooms,
-                'price' => $apartment->square_meter * $apartment->active_price,
-                'discount_price' => ($apartment->square_meter * $apartment->active_price) - (($apartment->discount ?? 0) * ($apartment->square_meter * $apartment->active_price) / 100),
+                'price' => $price,
+                'discount_price' => $price - (($apartment->discount ?? 0) * $price / 100),
                 'square_meter_price' => $apartment->active_price,
+                'has_terrace' => (bool) $apartment->has_terrace,
+                'terrace_area' => $apartment->terrace_area !== null ? (float) $apartment->terrace_area : null,
                 'image' => $apartment->image
                     ? $disk->url($apartment->image, now()->addSeconds(3600))
                     : null,
@@ -121,6 +137,10 @@ class ApartmentRepository
             ->with(['floor', 'block', 'building.translations'])
             ->get()
             ->map(function (Apartment $apartment) use ($disk) {
+                $price = $apartment->total_price !== null
+                    ? (float) $apartment->total_price
+                    : $apartment->square_meter * $apartment->active_price;
+
                 return [
                     'id' => $apartment->id,
                     'number' => $apartment->number,
@@ -129,8 +149,10 @@ class ApartmentRepository
                     'floor_level' => $apartment->floor->level,
                     'rooms' => $apartment->rooms,
                     'square_meter' => $apartment->square_meter,
-                    'price' => $apartment->square_meter * $apartment->active_price,
+                    'price' => $price,
                     'square_meter_price' => $apartment->active_price,
+                    'has_terrace' => (bool) $apartment->has_terrace,
+                    'terrace_area' => $apartment->terrace_area !== null ? (float) $apartment->terrace_area : null,
                     'image' => $apartment->image
                         ? $disk->url($apartment->image, now()->addSeconds(3600))
                         : null,
@@ -138,7 +160,7 @@ class ApartmentRepository
                         ? $disk->url($apartment->parent_image, now()->addSeconds(3600))
                         : null,
                     'status' => $apartment->status,
-                    'discount_price' => ($apartment->square_meter * $apartment->active_price) - (($apartment->discount ?? 0) * ($apartment->square_meter * $apartment->active_price) / 100),
+                    'discount_price' => $price - (($apartment->discount ?? 0) * $price / 100),
                     'discount' => $apartment->discount,
                 ];
             });

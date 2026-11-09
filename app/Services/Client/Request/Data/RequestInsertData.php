@@ -25,7 +25,11 @@ final class RequestInsertData extends Data
             'name' => ['required', 'string', 'min:3'],
             'phone' => [
                 'required',
-                'regex:/^(\+374\d{8}|\+7\d{10})$/'
+                // Armenia and Russia are the two the site offers as a choice, but a
+                // buyer can be reached on any country's number, so accept E.164:
+                // a plus and 7 to 15 digits. The site still checks +374 and +7
+                // strictly, this only widens what else may come through.
+                'regex:/^\+[1-9]\d{6,14}$/'
             ],
             'relation_id' => ['required', 'integer', 'gt:0'],
             'type' => ['nullable', new Enum(RequestTypeEnum::class)]
