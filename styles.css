@@ -8128,3 +8128,13 @@ body[data-page="catalog"] .catalog-scheme-view .floor-rail--residual button:hove
     font-size: 14px;
   }
 }
+
+/* ---------------------------------------------------------------------------
+   Booking form: the name field is now two -- first name and surname. They pair
+   up on the first row of the two-column grid, so the phone takes the next row
+   on its own instead of leaving a hole beside it. Below 760px .lead-fields is
+   already a single column and this simply has no effect.
+--------------------------------------------------------------------------- */
+.lead-form .field--phone {
+  grid-column: 1 / -1;
+}
