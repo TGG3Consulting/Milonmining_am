@@ -105,9 +105,16 @@ for (const building of buildings) {
     // apt.status is the enum value string: "active" | "reserved" | "sold"
     const rawStatus = typeof apt.status === 'string' ? apt.status : (apt.status?.value ?? 'active');
 
+    // `id` stays the row id — floorplans.js keys its polygons by it.
+    // `number` is only the label the site prints, and it must be the CRM number
+    // ("6+7", "166ա" and the like are legitimate values there).
+    const aptNumber = apt.number == null || String(apt.number).trim() === ''
+      ? String(apt.id)
+      : String(apt.number).trim();
+
     units.push({
       id:          String(apt.id),
-      number:      String(apt.id),
+      number:      aptNumber,
       project:     slug,
       type:        'apartment',
       rooms:       apt.rooms       ?? null,
@@ -130,6 +137,17 @@ const byProject = units.reduce((a, u) => { a[u.project] = (a[u.project] || 0) + 
 const byStatus  = units.reduce((a, u) => { a[u.status]  = (a[u.status]  || 0) + 1; return a; }, {});
 console.log('By project:', byProject);
 console.log('By status:', byStatus);
+
+// The API used to drop apartments.number from its select list, which left every
+// unit labelled with its row id. Say so loudly if that ever comes back.
+const fellBack = units.filter(u => u.number === u.id).length;
+if (fellBack) {
+  console.warn(`\n!! ${fellBack} of ${units.length} units have no number from the API `
+    + `and are labelled with their row id instead.`);
+  if (fellBack > units.length / 2) {
+    throw new Error('The API is not returning apartments.number — refusing to publish row ids as apartment numbers.');
+  }
+}
 
 // Patch site-data.js — index-based splice to avoid CRLF issues
 const siteDataPath = path.join(__dir, 'site-data.js');
