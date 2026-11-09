@@ -8061,3 +8061,70 @@ body[data-page="catalog"] .catalog-scheme-view .floor-rail--residual button:hove
   }
 }
 
+
+/* ---------------------------------------------------------------------------
+   Header fit between the burger and the full desktop row
+   The header is a three-column grid (brand | nav | actions) with gap: 4vw, and
+   .desktop-nav carries min-width: 0 so its track can be squeezed below its own
+   content. The links are white-space: nowrap, so once that happens they do not
+   shrink -- they spill out of the track and ride on top of the brand and the
+   actions. Measured on the live page, the full row only fitted from 1580px up,
+   while the burger does not take over until 1020px: every width in between
+   overlapped, including 1440-1470.
+   These rules hand the row back the space it needs, one step at a time, so it
+   fits the whole way down to the burger breakpoint.
+--------------------------------------------------------------------------- */
+.site-header {
+  /* 4vw spent 128px on nothing but gaps at 1600px */
+  gap: clamp(16px, 2vw, 40px);
+}
+
+@media (max-width: 1520px) {
+  .site-header {
+    padding-inline: 28px;
+  }
+
+  .desktop-nav {
+    gap: 20px;
+  }
+
+  /* the number is still one tap away in the burger menu and the footer */
+  .header-phone {
+    display: none;
+  }
+}
+
+@media (max-width: 1280px) {
+  .site-header {
+    padding-inline: 22px;
+  }
+
+  .desktop-nav {
+    gap: 15px;
+  }
+
+  .desktop-nav a {
+    font-size: 14.6px;
+  }
+
+  .desktop-cta {
+    padding-inline: 18px;
+  }
+}
+
+/* Only in this narrow band, and only on desktop: the wordmark is the cheapest
+   170px in the row to give up, and the logo itself already reads MILON MINING.
+   Phones keep it -- there the brand is alone on the line. */
+@media (min-width: 1021px) and (max-width: 1180px) {
+  .brand span {
+    display: none;
+  }
+
+  .desktop-nav {
+    gap: 13px;
+  }
+
+  .desktop-nav a {
+    font-size: 14px;
+  }
+}
