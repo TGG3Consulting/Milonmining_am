@@ -2,6 +2,7 @@
 
 namespace App\Services\Client\Bitrix;
 
+use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Throwable;
@@ -146,6 +147,21 @@ final class BitrixCrmService
         return is_numeric($result) ? (int) $result : null;
     }
 
+    /**
+     * milonmining24.bitrix24.ru resolves to a dozen addresses and several of
+     * them refuse to accept a connection from this server: about a third of
+     * attempts hang at the TCP stage while the rest answer in under a second.
+     * cURL picks an address per attempt, so the cure is to give up on a dead
+     * one quickly and try again, which lands on a different address.
+     *
+     * Only a failure to establish the connection is repeated. If the socket
+     * opened, Bitrix may well have carried out the request before we gave up,
+     * and repeating it would duplicate a contact, a deal or a lead. That case
+     * is told apart by how long the attempt lasted.
+     */
+    private const ATTEMPTS = 3;
+    private const CONNECT_TIMEOUT = 5;
+
     private function call(string $method, array $payload): ?array
     {
         $webhook = config('services.bitrix.webhook');
@@ -155,34 +171,60 @@ final class BitrixCrmService
         }
 
         $url = rtrim($webhook, '/') . '/' . $method . '.json';
+        $timeout = (int) config('services.bitrix.timeout', 20);
 
-        try {
-            $response = Http::timeout((int) config('services.bitrix.timeout', 10))
-                ->acceptJson()
-                ->asJson()
-                ->post($url, $payload);
+        for ($attempt = 1; $attempt <= self::ATTEMPTS; $attempt++) {
+            $startedAt = microtime(true);
 
-            $body = $response->json();
+            try {
+                $response = Http::connectTimeout(self::CONNECT_TIMEOUT)
+                    ->timeout($timeout)
+                    ->acceptJson()
+                    ->asJson()
+                    ->post($url, $payload);
 
-            if (!$response->successful() || isset($body['error'])) {
-                Log::warning('Bitrix CRM call failed', [
-                    'method' => $method,
-                    'status' => $response->status(),
-                    'error'  => $body['error'] ?? null,
-                    'detail' => $body['error_description'] ?? null,
+                $body = $response->json();
+
+                if (!$response->successful() || isset($body['error'])) {
+                    Log::warning('Bitrix CRM call failed', [
+                        'method' => $method,
+                        'status' => $response->status(),
+                        'error'  => $body['error'] ?? null,
+                        'detail' => $body['error_description'] ?? null,
+                    ]);
+
+                    return null;
+                }
+
+                if ($attempt > 1) {
+                    Log::info('Bitrix CRM call succeeded on a retry', [
+                        'method'  => $method,
+                        'attempt' => $attempt,
+                    ]);
+                }
+
+                return $body;
+            } catch (Throwable $e) {
+                $elapsed = microtime(true) - $startedAt;
+                $neverConnected = $e instanceof ConnectionException
+                    && $elapsed < self::CONNECT_TIMEOUT + 1;
+
+                if ($neverConnected && $attempt < self::ATTEMPTS) {
+                    continue;
+                }
+
+                Log::warning('Bitrix CRM call threw', [
+                    'method'   => $method,
+                    'attempt'  => $attempt,
+                    'elapsed'  => round($elapsed, 1),
+                    'retried'  => $neverConnected,
+                    'message'  => $e->getMessage(),
                 ]);
 
                 return null;
             }
-
-            return $body;
-        } catch (Throwable $e) {
-            Log::warning('Bitrix CRM call threw', [
-                'method'  => $method,
-                'message' => $e->getMessage(),
-            ]);
-
-            return null;
         }
+
+        return null;
     }
 }
