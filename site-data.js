@@ -998,7 +998,9 @@
   };
 })();
 
-// Backend API config — update apiBase to point to your Laravel server
+// Backend API config. This was still pointing at a developer's own machine,
+// so every booking the site sent went to http://localhost:8001 in the
+// visitor's browser and never reached us.
 window.MILON_CONFIG = {
-  apiBase: "http://localhost:8001",
+  apiBase: "https://api.milonmining.am",
 };
