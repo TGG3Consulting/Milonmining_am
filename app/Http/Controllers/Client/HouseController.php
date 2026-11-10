@@ -19,7 +19,7 @@ class HouseController extends Controller
 
     public function list(Request $request): JsonResponse
     {
-        return $this->success($this->service->list(HouseListData::from($request), LocaleEnum::from($request->get('lang') === 'hy' ? 'am' : $request->get('lang'))));
+        return $this->success($this->service->list(HouseListData::from($request), $this->resolveLocale($request)));
     }
 
     public function townhouseSlides(): JsonResponse

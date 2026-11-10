@@ -18,6 +18,6 @@ class BuildingController extends Controller
 
     public function list(Request $request): JsonResponse
     {
-        return $this->success($this->service->list(LocaleEnum::from($request->get('lang') === 'hy' ? 'am' : $request->get('lang'))));
+        return $this->success($this->service->list($this->resolveLocale($request)));
     }
 }

@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 
+use App\Enum\LocaleEnum;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Pagination\AbstractPaginator;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Routing\Controller as BaseController;
@@ -11,6 +13,27 @@ use Symfony\Component\HttpFoundation\Response as Http;
 
 abstract class Controller
 {
+    /**
+     * The language a request asks for, if it asks at all.
+     *
+     * Callers used to do LocaleEnum::from($request->get('lang')) directly,
+     * which throws a ValueError and turns into a 500 the moment `lang` is
+     * missing or is something we do not publish. The website's booking form
+     * sends no lang at all, so every booking it made came back 500.
+     */
+    protected function resolveLocale(Request $request, LocaleEnum $fallback = LocaleEnum::AM): LocaleEnum
+    {
+        $lang = $request->get('lang');
+
+        if ($lang === 'hy') {
+            $lang = 'am';
+        }
+
+        return is_string($lang)
+            ? (LocaleEnum::tryFrom($lang) ?? $fallback)
+            : $fallback;
+    }
+
     /**
      * Unified JSON shape.
      *

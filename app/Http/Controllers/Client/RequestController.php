@@ -29,21 +29,25 @@ class RequestController extends Controller
     {
         $dto = RequestInsertData::from($request);
         $block = RequestBlockEnum::from($block);
-        $request = $this->service->store($block, $dto, LocaleEnum::from($request->get('lang') === 'hy' ? 'am' : $request->get('lang')));
+        $request = $this->service->store($block, $dto, $this->resolveLocale($request));
 
-        // Our own row is written by now, so the CRM push is deliberately after
-        // it and deliberately unable to fail the response.
+        // Our own row is written by now. The two Bitrix calls take about five
+        // seconds between them, which is far too long to keep somebody staring
+        // at a spinner, so they run after the response has gone out. A CRM
+        // outage is logged and swallowed, never shown as a failed form.
         [$firstName, $lastName] = $this->splitName($dto->first_name, $dto->last_name, $dto->name);
-        $this->bitrix->createBooking(
+        $apartmentNumber = $block === RequestBlockEnum::APARTMENTS
+            ? Apartment::query()->whereKey($dto->relation_id)->value('number')
+            : null;
+
+        defer(fn () => $this->bitrix->createBooking(
             $firstName,
             $lastName,
             $dto->phone,
             $dto->relation_id,
             $dto->preferred_contact_method,
-            $block === RequestBlockEnum::APARTMENTS
-                ? Apartment::query()->whereKey($dto->relation_id)->value('number')
-                : null
-        );
+            $apartmentNumber
+        ));
 
         if ($block === RequestBlockEnum::APARTMENTS) {
             return $this->created([
@@ -64,12 +68,13 @@ class RequestController extends Controller
     {
         $dto = FeedbackInsertData::from($request);
 
-        $this->bitrix->createLead(
+        // Same reasoning as the booking: answer first, talk to Bitrix after.
+        defer(fn () => $this->bitrix->createLead(
             $dto->first_name,
             $dto->last_name,
             $dto->phone,
             $dto->preferred_contact_method
-        );
+        ));
 
         return $this->created(null, 'Created');
     }
