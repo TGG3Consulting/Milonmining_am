@@ -1,6 +1,6 @@
 <?php
 return [
-    'paths' => ['api/*', 'sanctum/csrf-cookie', 'csrf-cookie', 'login', 'logout', 'buildings','apartments', 'apartments/*', 'houses', 'reserve/houses', 'reserve/*', 'reserve/apartments', 'houses/townhouses/slides'],
+    'paths' => ['api/*', 'sanctum/csrf-cookie', 'csrf-cookie', 'login', 'logout', 'buildings','apartments', 'apartments/*', 'houses', 'reserve/houses', 'reserve/*', 'reserve/apartments', 'contact', 'houses/townhouses/slides'],
     'allowed_methods' => ['*'],
     'allowed_origins' => ['*'],
     'allowed_origins_patterns' => [],

@@ -46,6 +46,14 @@ return [
         'key' => env('RESEND_KEY'),
     ],
 
+    // Inbound webhook used to push the two website forms into Bitrix24.
+    // Leave BITRIX_CRM_WEBHOOK empty to switch the push off entirely; the
+    // forms keep working and keep writing to our own database.
+    'bitrix' => [
+        'webhook' => env('BITRIX_CRM_WEBHOOK'),
+        'timeout' => (int) env('BITRIX_CRM_TIMEOUT', 10),
+    ],
+
     'ses' => [
         'key' => env('AWS_ACCESS_KEY_ID'),
         'secret' => env('AWS_SECRET_ACCESS_KEY'),

@@ -19,6 +19,13 @@ Route::group(['prefix' => 'reserve'], function () {
     Route::post('/{request_id}/want_garage', [RequestController::class, 'want_garage'])->withoutMiddleware([VerifyCsrf::class]);
 })->middleware('throttle:reserve');
 
+// The feedback form. It sits outside the reserve group on purpose: that group's
+// {type} is a wildcard, so a /reserve/contact would be read as a block name.
+// It carries no apartment and becomes a Lead in Bitrix rather than a Deal.
+Route::post('/contact', [RequestController::class, 'contact'])
+    ->withoutMiddleware([VerifyCsrf::class])
+    ->middleware('throttle:reserve');
+
 Route::group(['prefix' => 'houses'], function () {
     Route::get('/', [HouseController::class, 'list']);
     Route::get('/townhouses/slides', [HouseController::class, 'townhouseSlides']);
