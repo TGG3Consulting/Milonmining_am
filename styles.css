@@ -8186,3 +8186,17 @@ body[data-page="catalog"] .catalog-scheme-view .floor-rail--residual button:hove
 .unit-detail__facts .fact--terrace {
   grid-column: 1 / -1;
 }
+
+/* ---------------------------------------------------------------------------
+   Preferred contact, inside the booking dialog
+   .booking-modal .contact-methods label span paints the text green, and
+   .contact-methods input:checked + span paints the background green. The two
+   carry the same specificity, so the modal rule simply won by coming later in
+   the file and the chosen option turned into a green block with green text on
+   it. The checked state needs to outrank the modal's own colour.
+--------------------------------------------------------------------------- */
+.booking-modal .contact-methods input:checked + span {
+  border-color: #00a387;
+  color: #ffffff;
+  background: #00a387;
+}
