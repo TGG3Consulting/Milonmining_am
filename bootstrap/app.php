@@ -21,7 +21,15 @@ return Application::configure(basePath: dirname(__DIR__))
             'role_or_permission' => RoleOrPermissionMiddleware::class,
             'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class
         ]);
-        $middleware->use([\Illuminate\Http\Middleware\HandleCors::class]);
+        // use() replaces the whole global stack, and Laravel's own default
+        // stack starts with InvokeDeferredCallbacks. Dropping it means every
+        // defer() closure is collected and then silently thrown away, which is
+        // what swallowed the Bitrix push after a booking: HTTP 201, no CRM
+        // record, nothing in the log.
+        $middleware->use([
+            \Illuminate\Foundation\Http\Middleware\InvokeDeferredCallbacks::class,
+            \Illuminate\Http\Middleware\HandleCors::class,
+        ]);
 //        $middleware->appendToGroup('web', \App\Http\Middleware\VerifyCsrfToken::class);
         $middleware->appendToGroup('web', \App\Http\Middleware\EnsureDeviceCookie::class);
         $middleware->appendToGroup('api', EnsureFrontendRequestsAreStateful::class);
