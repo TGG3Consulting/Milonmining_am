@@ -728,6 +728,45 @@
     bindCatalogModes();bindBookingButtons();bindMortgageButtons();bindUnitDetailButtons();bindUnitCardMedia();
   }
 
+
+
+  // The project field is a native <select>, so it closes the moment you click
+  // anywhere else on the page. Rooms and floors are <details> panels, which do
+  // not: they stayed open until you clicked their own summary a second time.
+  // Close them on any click outside, and on Escape, so all three behave alike.
+  function closeFilterPanels(except) {
+    document.querySelectorAll("details.filter-multiselect[open]").forEach(panel => {
+      if (!except || !panel.contains(except)) panel.open = false;
+    });
+  }
+  document.addEventListener("pointerdown", event => closeFilterPanels(event.target));
+  document.addEventListener("keydown", event => { if (event.key === "Escape") closeFilterPanels(); });
+
+  // Browsers uppercase the Armenian ligature և to ԵՒ, which is the pre-reform
+  // spelling. Modern orthography wants ԵՎ, so wherever CSS puts a label in
+  // capitals the ligature has to be spelled out before the transform sees it.
+  // Only text that is actually rendered uppercase is touched; lower-case copy
+  // keeps the ligature, where it is the correct form.
+  const YEV = "և";
+  function spellOutYev(root) {
+    if (!root || !root.querySelectorAll) return;
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+    const found = [];
+    for (let node = walker.nextNode(); node; node = walker.nextNode())
+      if (node.nodeValue.indexOf(YEV) >= 0) found.push(node);
+    for (const node of found) {
+      const host = node.parentElement;
+      if (!host || getComputedStyle(host).textTransform !== "uppercase") continue;
+      node.nodeValue = node.nodeValue.split(YEV).join("ԵՎ");
+    }
+  }
+  new MutationObserver(records => {
+    for (const record of records)
+      for (const node of record.addedNodes)
+        spellOutYev(node.nodeType === 1 ? node : node.parentElement);
+  }).observe(document.body, { childList: true, subtree: true });
+
   Object.defineProperty(window,"MILON_TEST_API",{value:Object.freeze({filterUnits,filters,calculateMortgage}),enumerable:false});
   render();
+  spellOutYev(document.body);
 })();
