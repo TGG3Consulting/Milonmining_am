@@ -24,7 +24,7 @@
   <link rel="icon" href="/assets/favicon.ico" sizes="any">
   <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
   <link rel="manifest" href="/assets/site.webmanifest">
-  <link rel="stylesheet" href="styles.css?v=47">
+  <link rel="stylesheet" href="styles.css?v=48">
   <style id="home-iteration-1">
     body[data-page="home"] {
       --ink: #1d283e;
@@ -490,7 +490,7 @@
       }
     }
   </style>
-  <script src="site-data.js?v=47" defer></script>
+  <script src="site-data.js?v=48" defer></script>
   <!-- Page-local copy of the existing runtime: portable paths without changing shared site.js. -->
   <script id="home-runtime">
     document.addEventListener("DOMContentLoaded", () => {
@@ -730,7 +730,7 @@
     return `<div class="lead-sent" role="status" aria-live="assertive"><span class="lead-sent__mark">${icon("check")}</span><h3>${t("sentT")}</h3><p>${t("sentP")}</p>${action}</div>`;
   }
 
-  function contactSection(context={}) { return `<section class="contact-section section-pad"><div class="page-shell contact-layout"><div>${heading(t("contactK"),t("contactT"),t("contactP"))}<div class="direct-contact"><a href="tel:${D.contacts.mobile.replace(/\s/g,"")}">${D.contacts.mobile}</a><a href="mailto:${D.contacts.email}">${D.contacts.email}</a></div></div>${leadForm(context)}</div></section>`; }
+  function contactSection(context={}) { return `<section class="contact-section section-pad" id="consult"><div class="page-shell contact-layout"><div>${heading(t("contactK"),t("contactT"),t("contactP"))}<div class="direct-contact"><a href="tel:${D.contacts.mobile.replace(/\s/g,"")}">${D.contacts.mobile}</a><a href="mailto:${D.contacts.email}">${D.contacts.email}</a></div></div>${leadForm(context)}</div></section>`; }
 
   function projectStatusBadge(p, context="card") {
     if(p.key==="hills"||p.key==="tower")return `<span class="project-special-status project-special-status--sold project-special-status--${context}"><b>${lang==="ru"?"СТРОИТСЯ":"ԿԱՌՈՒՑՎՈՒՄ Է"}</b></span>`;
@@ -798,7 +798,7 @@
   function offerPage(offer) {
     const others=activeOffers().filter(item=>item.id!==offer.id), active=isOfferActive(offer);
     const expiredCopy=lang==="ru"?"Предложение завершено. Актуальные условия можно уточнить в отделе продаж.":"Առաջարկն ավարտված է։ Արդիական պայմանները կարող եք ճշտել վաճառքի բաժնում։";
-    return `${header()}<main id="main"><section class="offer-hero"><img src="${a(offer.image)}" alt="${esc(l(offer.title))}"><div class="hero-shade"></div><div class="page-shell"><span class="eyebrow">${l(offer.type)}</span><h1>${l(offer.title)}</h1><p>${l(offer.advantage)}</p></div></section><section class="offer-details section-pad"><div class="page-shell offer-details__layout"><article><span class="eyebrow">${t("offerValidity")}</span><h2>${l(offer.validity)}</h2><p>${active?l(offer.details):expiredCopy}</p><div class="offer-actions"><a class="button button--dark" href="${link(`apartments.html${offer.projects.length===1?`?project=${offer.projects[0]}`:""}`)}">${t("openCatalog")}${icon("arrow")}</a><a class="button button--outline" href="#contacts">${t("consult")}${icon("arrow")}</a></div>${offer.legal?`<p class="offer-legal">${l(offer.legal)}</p>`:""}${offer.sources?.length?`<div class="offer-sources"><span>${t("sources")}</span>${offer.sources.map((source,i)=>`<a href="${source}" target="_blank" rel="noopener">${i===0?"ՀՀ ՊԵԿ":"Hartak.am"}${icon("arrow")}</a>`).join("")}</div>`:""}</article><aside><span class="eyebrow">${t("offerProjects")}</span>${offerProjectLinks(offer)}</aside></div>${offerUnitPicker(offer)}</section>${others.length?`<section class="other-offers section-pad"><div class="page-shell">${heading(t("offersK"),t("offerOther"))}<div class="content-carousel offer-carousel" data-carousel><div class="carousel-track" data-carousel-track>${others.map(offerCard).join("")}</div><div class="carousel-controls"><button type="button" data-carousel-prev aria-label="${t("previous")}">${icon("back")}</button><span><b data-carousel-current>1</b> / ${others.length}</span><button type="button" data-carousel-next aria-label="${t("next")}">${icon("arrow")}</button></div></div></div></section>`:""}${contactSection()}</main>${footer()}${dialogs()}`;
+    return `${header()}<main id="main"><section class="offer-hero"><img src="${a(offer.image)}" alt="${esc(l(offer.title))}"><div class="hero-shade"></div><div class="page-shell"><span class="eyebrow">${l(offer.type)}</span><h1>${l(offer.title)}</h1><p>${l(offer.advantage)}</p></div></section><section class="offer-details section-pad"><div class="page-shell offer-details__layout"><article><span class="eyebrow">${t("offerValidity")}</span><h2>${l(offer.validity)}</h2><p>${active?l(offer.details):expiredCopy}</p><div class="offer-actions"><a class="button button--dark" href="${link(`apartments.html${offer.projects.length===1?`?project=${offer.projects[0]}`:""}`)}">${t("openCatalog")}${icon("arrow")}</a><a class="button button--outline" href="#consult">${t("consult")}${icon("arrow")}</a></div>${offer.legal?`<p class="offer-legal">${l(offer.legal)}</p>`:""}${offer.sources?.length?`<div class="offer-sources"><span>${t("sources")}</span>${offer.sources.map((source,i)=>`<a href="${source}" target="_blank" rel="noopener">${i===0?"ՀՀ ՊԵԿ":"Hartak.am"}${icon("arrow")}</a>`).join("")}</div>`:""}</article><aside><span class="eyebrow">${t("offerProjects")}</span>${offerProjectLinks(offer)}</aside></div>${offerUnitPicker(offer)}</section>${others.length?`<section class="other-offers section-pad"><div class="page-shell">${heading(t("offersK"),t("offerOther"))}<div class="content-carousel offer-carousel" data-carousel><div class="carousel-track" data-carousel-track>${others.map(offerCard).join("")}</div><div class="carousel-controls"><button type="button" data-carousel-prev aria-label="${t("previous")}">${icon("back")}</button><span><b data-carousel-current>1</b> / ${others.length}</span><button type="button" data-carousel-next aria-label="${t("next")}">${icon("arrow")}</button></div></div></div></section>`:""}${contactSection()}</main>${footer()}${dialogs()}`;
   }
 
   function projectHero(p) {
@@ -823,7 +823,7 @@
     const count=D.units.filter(u=>u.project===p.key).length;
     const copy=count?t("projectAptsP"):p.key==="plaza"?t("soldOut"):t("unpublished");
     const title=p.key==="tower"?t("towerApts"):t("projectApts");
-    return `<section class="project-apartments section-pad"><div class="page-shell project-apartments__inner"><div>${heading(t("finderK"),title,copy)}</div><div class="project-apartments__action"><a class="button button--dark" href="${count?link(`apartments.html?project=${p.key}`):"#contacts"}">${count?t("catalogOpen"):t("contactT")}${icon("arrow")}</a></div></div></section>`;
+    return `<section class="project-apartments section-pad"><div class="page-shell project-apartments__inner"><div>${heading(t("finderK"),title,copy)}</div><div class="project-apartments__action"><a class="button button--dark" href="${count?link(`apartments.html?project=${p.key}`):"#consult"}">${count?t("catalogOpen"):t("contactT")}${icon("arrow")}</a></div></div></section>`;
   }
 
   function gallery(p) {
