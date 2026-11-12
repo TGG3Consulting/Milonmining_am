@@ -22,7 +22,7 @@
       seeProjects: "Դիտել նախագծերը", discover: "Բացահայտել", finderK: "Բնակարանի ընտրություն", finderT: "Ընտրեք լավագույն տարբերակը ձեզ համար",
       finderP: "", project: "Նախագիծ", allProjects: "Բոլոր նախագծերը",
       rooms: "Սենյակներ", any: "Բոլորը", areaFrom: "Մակերես՝ սկսած", areaTo: "Մակերես՝ մինչև", priceFrom: "Արժեք՝ սկսած",
-      priceTo: "Արժեք՝ մինչև", floors: "Հարկեր", allFloors: "Բոլոր հարկերը", statusAvailable: "Հասանելի", statusReserved: "Ամրագրված", statusSold: "Վաճառված", reset: "Մաքրել", show: "Ցույց տալ", apt: "բնակարան",
+      priceTo: "Արժեք՝ մինչև", floors: "Հարկեր", allFloors: "Բոլոր հարկերը", statusAvailable: "Հասանելի", statusReserved: "Ամրագրված", statusSold: "Վաճառված", vFill: "Լրացրեք այս դաշտը", vBox: "Նշեք այս վանդակը", vChoose: "Ընտրեք տարբերակ", vShort: "Նվազագույնը {n} նիշ", vRange: "Արժեքը թույլատրելի սահմաններից դուրս է", vFormat: "Ստուգեք լրացման ձևաչափը", reset: "Մաքրել", show: "Ցույց տալ", apt: "բնակարան",
       projectK: "Մեր նախագծերը", projectT: "Չորս հասցե, մեկ մոտեցում", projectP: "Milon-ի չորս նախագծերը տարբերվում են ձևաչափով, տեղադրությամբ և շրջակայքով՝ առաջարկելով բնակության տարբեր միջավայրեր։",
       projectMore: "Նախագծի մասին", companyK: "Milon Mining", companyT: "Մենք պարզապես շենքեր չենք կառուցում․ մենք ստեղծում ենք առօրյա կյանքի հիմքը",
       companyP: "2001 թվականից ընկերությունը զարգացել է՝ շինանյութի ոլորտում կուտակելով տարիների փորձ և մասնագիտական գիտելիք։ Այսօր մենք ստեղծում ենք բնակելի միջավայրեր՝ խորապես հասկանալով նյութը, յուրաքանչյուր գործընթացի կարևորությունն ու այն պատասխանատվությունը մեր բնակիչների առաջ:",
@@ -69,7 +69,7 @@
       choose: "Выбрать квартиру", heroK: "Жилые проекты в Абовяне и Ариндже", heroT: "Пространство, в котором раскрывается жизнь",
       heroP: "Milon Mining создаёт жилую среду, объединяя архитектуру, ежедневный комфорт и долгосрочную ценность в одно целое.", seeProjects: "Смотреть проекты", discover: "Исследовать",
       finderK: "Подбор квартиры", finderT: "Найдите свою будущую квартиру", finderP: "", project: "Проект", allProjects: "Все проекты", rooms: "Комнаты", any: "Любые",
-      areaFrom: "Площадь от", areaTo: "Площадь до", priceFrom: "Стоимость от", priceTo: "Стоимость до", floors: "Этажи", allFloors: "Все этажи", statusAvailable: "Доступные", statusReserved: "Забронированные", statusSold: "Проданные", reset: "Сбросить", show: "Показать", apt: "квартир",
+      areaFrom: "Площадь от", areaTo: "Площадь до", priceFrom: "Стоимость от", priceTo: "Стоимость до", floors: "Этажи", allFloors: "Все этажи", statusAvailable: "Доступные", statusReserved: "Забронированные", statusSold: "Проданные", vFill: "Заполните это поле", vBox: "Отметьте это поле", vChoose: "Выберите вариант", vShort: "Минимум {n} символа", vRange: "Значение вне допустимых границ", vFormat: "Проверьте формат", reset: "Сбросить", show: "Показать", apt: "квартир",
       projectK: "Наши проекты", projectT: "Четыре адреса, один подход", projectP: "У Milon четыре разных проекта — с разным форматом жилья, расположением и окружением.", projectMore: "О проекте",
       companyK: "Milon Mining", companyT: "Мы строим не просто здания — мы создаём основу повседневной жизни", companyP: "С 2001 года компания прошла путь от строительных материалов до жилого девелопмента. Мы понимаем материал, процесс и ответственность, которая продолжается после заселения.", aboutCompany: "О компании",
       mapK: "Расположение", mapT: "Реальные адреса на реальной карте", mapP: "Сравните расположение проектов, расстояние от центра Еревана и ориентировочное время в пути.", mapOpen: "Открыть в Google Maps", mapDistance: "Расстояние от центра Еревана", mapTime: "Время на автомобиле", mapTimeNote: "Ориентировочно, без учёта пробок", projectOpen: "Перейти к проекту",
@@ -668,13 +668,39 @@
     dialog.showModal();
   }
 
+  // The browser writes "fill in this field" in its own interface language, so
+  // a Russian-language Chrome said so on the Armenian site. Every message the
+  // form can raise is replaced with the site's own wording, applied just
+  // before reportValidity so the bubble reads from it.
+  function validityMessage(el) {
+    const v = el.validity;
+    if (v.valueMissing) {
+      if (el.type === "checkbox" || el.type === "radio") return t("vBox");
+      if (el.tagName === "SELECT") return t("vChoose");
+      return t("vFill");
+    }
+    if (v.tooShort) return t("vShort").replace("{n}", el.minLength);
+    if (v.rangeUnderflow || v.rangeOverflow || v.stepMismatch) return t("vRange");
+    return t("vFormat");
+  }
+  function localiseValidity(form) {
+    for (const el of form.elements) {
+      if (!el.willValidate) continue;
+      el.setCustomValidity("");
+      // read .validity rather than checkValidity(), which would fire events
+      if (!el.validity.valid) el.setCustomValidity(validityMessage(el));
+    }
+  }
+
   function bindLead(form) {
     if(!form||form.dataset.bound)return;form.dataset.bound="1";const fields=form.innerHTML;
+    form.addEventListener("input",e=>e.target.setCustomValidity?.(""));
+    form.addEventListener("change",e=>e.target.setCustomValidity?.(""));
     // the placeholder follows whichever code is selected
     function wirePhoneCode(){const codeSelect=form.querySelector('[name="phone_code"]'),phoneInput=form.querySelector('[name="phone"]');
       if(codeSelect&&phoneInput)codeSelect.addEventListener("change",()=>{const e=PHONE_CODES.find(c=>c.code===codeSelect.value);if(e)phoneInput.placeholder=e.mask;});}
     wirePhoneCode();
-    form.addEventListener("submit",async e=>{e.preventDefault();if(!form.reportValidity())return;const fd=new FormData(form),status=form.querySelector("[data-form-status]"),button=form.querySelector('button[type="submit"]');const firstName=String(fd.get("first_name")||"").trim(),lastName=String(fd.get("last_name")||"").trim();const phoneCode=String(fd.get("phone_code")||PHONE_CODES[0].code),phoneEntry=PHONE_CODES.find(c=>c.code===phoneCode)||PHONE_CODES[0];const payload={first_name:firstName,last_name:lastName,name:[firstName,lastName].filter(Boolean).join(" "),phone:normalisePhone(phoneCode,fd.get("phone")),preferred_contact_method:fd.get("preferred_contact_method"),project:form.dataset.project||null,apartment_id:form.dataset.apartment||null,source_page:location.pathname.split("/").pop()||"index.html",language:lang,consent:fd.get("consent")==="on",created_at:new Date().toISOString()};if(!(phoneEntry.any?PHONE_ANY_RE:PHONE_RE).test(payload.phone)){status.textContent=t(phoneEntry.any?"phoneErrorAny":"phoneError");status.className="form-status is-error";form.querySelector('[name="phone"]')?.focus();return;}dispatchEvent(new CustomEvent("milon:lead",{detail:payload}));const apiBase=(window.MILON_CONFIG?.apiBase||"").replace(/\/+$/,"");const aptId=payload.apartment_id;if(!apiBase){status.innerHTML=`${t("pendingBackend")} <a href="tel:${D.contacts.mobile.replace(/\s/g,"")}">${D.contacts.mobile}</a>`;status.className="form-status is-pending";return;}button.disabled=true;status.textContent=t("sending");/* with an apartment it is a booking and becomes a deal; without one it is a feedback request and becomes a lead */try{/* the api reads `lang` to pick the locale it stores the request under */const endpoint=aptId?`${apiBase}/reserve/apartments?lang=${lang}`:`${apiBase}/contact?lang=${lang}`;const body=aptId?{name:payload.name,first_name:firstName,last_name:lastName,phone:payload.phone,relation_id:parseInt(aptId,10),preferred_contact_method:payload.preferred_contact_method}:{first_name:firstName,last_name:lastName,phone:payload.phone,preferred_contact_method:payload.preferred_contact_method};const response=await fetch(endpoint,{method:"POST",headers:{"Content-Type":"application/json","Accept":"application/json"},body:JSON.stringify(body)});if(!response.ok)throw new Error(String(response.status));const inDialog=!!form.closest("dialog");form.classList.add("is-sent");form.innerHTML=leadSent(inDialog);form.querySelector("[data-dialog-close]")?.addEventListener("click",()=>form.closest("dialog")?.close());form.querySelector("[data-lead-again]")?.addEventListener("click",()=>{form.classList.remove("is-sent");form.innerHTML=fields;wirePhoneCode();form.querySelector("input")?.focus();});}catch(err){console.error(err);status.textContent=t("sendError");status.className="form-status is-error";}finally{button.disabled=false;}});
+    form.addEventListener("submit",async e=>{e.preventDefault();localiseValidity(form);if(!form.reportValidity())return;const fd=new FormData(form),status=form.querySelector("[data-form-status]"),button=form.querySelector('button[type="submit"]');const firstName=String(fd.get("first_name")||"").trim(),lastName=String(fd.get("last_name")||"").trim();const phoneCode=String(fd.get("phone_code")||PHONE_CODES[0].code),phoneEntry=PHONE_CODES.find(c=>c.code===phoneCode)||PHONE_CODES[0];const payload={first_name:firstName,last_name:lastName,name:[firstName,lastName].filter(Boolean).join(" "),phone:normalisePhone(phoneCode,fd.get("phone")),preferred_contact_method:fd.get("preferred_contact_method"),project:form.dataset.project||null,apartment_id:form.dataset.apartment||null,source_page:location.pathname.split("/").pop()||"index.html",language:lang,consent:fd.get("consent")==="on",created_at:new Date().toISOString()};if(!(phoneEntry.any?PHONE_ANY_RE:PHONE_RE).test(payload.phone)){status.textContent=t(phoneEntry.any?"phoneErrorAny":"phoneError");status.className="form-status is-error";form.querySelector('[name="phone"]')?.focus();return;}dispatchEvent(new CustomEvent("milon:lead",{detail:payload}));const apiBase=(window.MILON_CONFIG?.apiBase||"").replace(/\/+$/,"");const aptId=payload.apartment_id;if(!apiBase){status.innerHTML=`${t("pendingBackend")} <a href="tel:${D.contacts.mobile.replace(/\s/g,"")}">${D.contacts.mobile}</a>`;status.className="form-status is-pending";return;}button.disabled=true;status.textContent=t("sending");/* with an apartment it is a booking and becomes a deal; without one it is a feedback request and becomes a lead */try{/* the api reads `lang` to pick the locale it stores the request under */const endpoint=aptId?`${apiBase}/reserve/apartments?lang=${lang}`:`${apiBase}/contact?lang=${lang}`;const body=aptId?{name:payload.name,first_name:firstName,last_name:lastName,phone:payload.phone,relation_id:parseInt(aptId,10),preferred_contact_method:payload.preferred_contact_method}:{first_name:firstName,last_name:lastName,phone:payload.phone,preferred_contact_method:payload.preferred_contact_method};const response=await fetch(endpoint,{method:"POST",headers:{"Content-Type":"application/json","Accept":"application/json"},body:JSON.stringify(body)});if(!response.ok)throw new Error(String(response.status));const inDialog=!!form.closest("dialog");form.classList.add("is-sent");form.innerHTML=leadSent(inDialog);form.querySelector("[data-dialog-close]")?.addEventListener("click",()=>form.closest("dialog")?.close());form.querySelector("[data-lead-again]")?.addEventListener("click",()=>{form.classList.remove("is-sent");form.innerHTML=fields;wirePhoneCode();form.querySelector("input")?.focus();});}catch(err){console.error(err);status.textContent=t("sendError");status.className="form-status is-error";}finally{button.disabled=false;}});
   }
 
   function bindMortgageCalculator(form) {
