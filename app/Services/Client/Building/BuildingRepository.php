@@ -89,7 +89,9 @@ class BuildingRepository
                     'images' => $building->images?->map(function ($image) use ($disk) {
                         return $disk->url($image->path, now()->addSeconds(3600));
                     }),
-                    'floors_qty' => $building->floors->count(),
+                    // Levels -2 and -1 are the parking decks, not storeys anyone lives on.
+                    // Counting them made the site print a 16th-floor flat as "16 / 18".
+                    'floors_qty' => $building->floors->where('level', '>', 0)->count(),
                 ];
             });
     }
