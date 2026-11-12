@@ -86,7 +86,7 @@
         hy: "Կոտայքի մարզ, Առինջ գյուղ, Բ թաղամաս, 1-ին փողոց, տուն 1",
         ru: "Котайкская область, село Ариндж, квартал Б, 1-я улица, дом 1"
       },
-      mapQuery: "Arinj B district 1st street 1, Kotayk, Armenia"
+      mapQuery: "40.242285,44.574766"
     },
     projectMap: {
       tower: {
@@ -233,7 +233,7 @@
         poster: "media/tower-poster.jpg",
         card: "milon-tower-front.jpg",
         facade: "milon-tower-fasad.jpg",
-        mapQuery: "40.277796,44.627247",
+        mapQuery: "40.281107,44.630707",
         facts: [
           { value: "398", label: { hy: "բնակարան", ru: "квартир" } },
           { value: "35–172 մ²", label: { hy: "մակերեսներ", ru: "площади" } },
@@ -319,7 +319,7 @@
         hero: "milon-plaza.jpg",
         card: "milon-plaza.jpg",
         facade: "milon-plaza.jpg",
-        mapQuery: "23 August Street 5, Abovyan, Armenia",
+        mapQuery: "40.272947,44.628139",
         facts: [
           { value: "168", label: { hy: "բնակարան", ru: "квартир" } },
           { value: "50.5–324 մ²", label: { hy: "մակերեսներ", ru: "площади" } },

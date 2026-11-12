@@ -12,7 +12,7 @@ import path from "node:path";
 const __dir = path.dirname(fileURLToPath(import.meta.url));
 
 // cache-busting token; keep in step with the root pages
-const ASSET_V = 52;
+const ASSET_V = 53;
 const LANGS = ["hy", "ru"];
 
 // site-data.js is an IIFE that assigns window.MILON_DATA
