@@ -8200,3 +8200,90 @@ body[data-page="catalog"] .catalog-scheme-view .floor-rail--residual button:hove
   color: #ffffff;
   background: #00a387;
 }
+
+/* The sent-request panel. It stands in for the whole form, so it carries the
+   weight the old 12px status line could not: a mark, a heading at the size of
+   a section title, and one line of what happens next. */
+.lead-form.is-sent {
+  display: grid;
+  place-items: center;
+  min-height: 320px;
+  padding: 32px 24px;
+  border: 1px solid rgba(0, 163, 135, 0.28);
+  border-radius: 18px;
+  background: rgba(0, 163, 135, 0.05);
+}
+
+.lead-sent {
+  display: grid;
+  justify-items: center;
+  gap: 14px;
+  max-width: 420px;
+  text-align: center;
+  animation: lead-sent-in 0.32s ease-out both;
+}
+
+.lead-sent__mark {
+  display: grid;
+  place-items: center;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  color: #ffffff;
+  background: #00a387;
+}
+
+.lead-sent__mark svg {
+  width: 30px;
+  height: 30px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 30;
+  animation: lead-sent-draw 0.45s 0.14s ease-out both;
+}
+
+.lead-sent h3 {
+  margin: 0;
+  font-size: clamp(22px, 2.4vw, 28px);
+  font-weight: 600;
+  line-height: 1.25;
+  color: var(--ink, #15181c);
+}
+
+.lead-sent p {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.55;
+  color: rgba(21, 24, 28, 0.66);
+}
+
+.lead-sent .button,
+.lead-sent .text-link {
+  margin-top: 6px;
+}
+
+@keyframes lead-sent-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: none; }
+}
+
+@keyframes lead-sent-draw {
+  from { stroke-dashoffset: 30; }
+  to   { stroke-dashoffset: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lead-sent,
+  .lead-sent__mark svg { animation: none; }
+}
+
+/* Inside the booking dialog the panel is the dialog's only content, so it
+   drops the box of its own and simply centres. */
+.booking-modal .lead-form.is-sent {
+  min-height: 260px;
+  border: 0;
+  background: none;
+}
