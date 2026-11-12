@@ -51,7 +51,7 @@
       "th-gal-4.jpg": "https://api.milonmining.am/storage/buildings/1/57e870a3-a5f5-4469-bd4d-0226dd191465.png",
       "th-gal-5.jpg": "https://api.milonmining.am/storage/buildings/1/ab68a882-728c-455d-a37e-5c61db53f53e.png",
       "th-gal-6.jpg": "https://api.milonmining.am/storage/buildings/1/ed510029-24af-4189-8396-60d41bc661ff.png",
-      "th-hero.jpg": "https://api.milonmining.am/storage/designs/1/8b5b1ac1-3de9-4584-baff-b7ac818022f7.jpg",
+      "th-hero.jpg": "assets/milon-townhouse-hero.jpg",
       "th-okr-1.jpg": "https://api.milonmining.am/storage/buildings/1/57e870a3-a5f5-4469-bd4d-0226dd191465.png",
       "th-okr-2.jpg": "https://api.milonmining.am/storage/buildings/1/ab68a882-728c-455d-a37e-5c61db53f53e.png",
       "tower-parking-illustration.jpg": "https://api.milonmining.am/storage/buildings/3/1370bb38-e65e-4159-a05c-ae85b1603d57.jpg",
