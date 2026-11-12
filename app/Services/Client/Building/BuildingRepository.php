@@ -82,10 +82,15 @@ class BuildingRepository
                     'areaMin' => $building->apartments->min('square_meter'),
                     'areaMax' => $building->apartments->max('square_meter'),
                     'parking' => $building->garages->count(),
-                    'coords' => [
-                        'lat' => 40.27146521335858,
-                        'lng' => 44.61866758168769
-                    ],
+                    // One pair was hard-coded for every building, so each one
+                    // was pinned to the same spot. Tower's comes from the
+                    // client's own Google Maps link. Nothing reads Hills'
+                    // today - the site's interactive map asks for id 3 - so
+                    // its old value stands until it is confirmed.
+                    'coords' => match ((int) $building->id) {
+                        3 => ['lat' => 40.281107, 'lng' => 44.630707],
+                        default => ['lat' => 40.27146521335858, 'lng' => 44.61866758168769],
+                    },
                     'images' => $building->images?->map(function ($image) use ($disk) {
                         return $disk->url($image->path, now()->addSeconds(3600));
                     }),
