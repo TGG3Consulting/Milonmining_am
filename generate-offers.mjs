@@ -12,7 +12,7 @@ import path from "node:path";
 const __dir = path.dirname(fileURLToPath(import.meta.url));
 
 // cache-busting token; keep in step with the root pages
-const ASSET_V = 50;
+const ASSET_V = 51;
 const LANGS = ["hy", "ru"];
 
 // site-data.js is an IIFE that assigns window.MILON_DATA
@@ -37,8 +37,8 @@ function shell({ lang, title, description, canonical, alternates, page, offerId,
   <meta name="description" content="${esc(description)}">
   <meta name="theme-color" content="#f2efe7">
   <title>${esc(title)}</title>
-  <link rel="icon" href="/assets/favicon.ico" sizes="any">
-  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+  <link rel="icon" href="/assets/favicon.ico?v=${ASSET_V}" sizes="any">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png?v=${ASSET_V}">
   <link rel="manifest" href="/assets/site.webmanifest">
   <link rel="canonical" href="${canonical}">
 ${alternates.map(a => `  <link rel="alternate" hreflang="${a.lang}" href="${a.href}">`).join("\n")}
