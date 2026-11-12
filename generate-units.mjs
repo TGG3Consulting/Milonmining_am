@@ -22,7 +22,7 @@ if (process.env.BUILDING_SLUGS) {
 // Works for English and Russian names without encoding issues.
 function slugFromName(name) {
   const n = (name || '').toLowerCase();
-  if (n.includes('tower') || n.includes('тауэ') || n.includes('tauer')) return 'tower';
+  if (n.includes('tower') || n.includes('тауэ') || n.includes('тауе') || n.includes('tauer')) return 'tower';
   if (n.includes('hills') || n.includes('хилл') || n.includes('hill'))  return 'hills';
   if (n.includes('plaza') || n.includes('плаза'))                        return 'plaza';
   if (n.includes('townhouse') || n.includes('town house') || n.includes('таунхаус')) return 'townhouse';
@@ -84,8 +84,12 @@ const units = [];
 for (const building of buildings) {
   const slug = resolveSlug(building);
   if (!slug) {
-    console.warn(`  skip building id=${building.id} "${building.name}" — no slug match (set BUILDING_SLUGS="${building.id}:tower" to fix)`);
-    continue;
+    // Never skip quietly. A building that falls through the name match used to
+    // be dropped from the output, and the write went ahead regardless: one
+    // rename in the CRM ("Тауэр" -> "Тауер") was enough to erase every Tower
+    // apartment from the site. Stop instead, and say which id needs mapping.
+    throw new Error(`building id=${building.id} "${building.name}" matched no project slug. `
+      + `Add it to the name matcher, or run with BUILDING_SLUGS="${building.id}:tower".`);
   }
   const totalFloors = building.floors_qty ?? null;
   console.log(`  "${building.name}" (id=${building.id}) → project=${slug}, floors=${totalFloors}`);
