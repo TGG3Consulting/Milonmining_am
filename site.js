@@ -22,7 +22,7 @@
       seeProjects: "Դիտել նախագծերը", discover: "Բացահայտել", finderK: "Բնակարանի ընտրություն", finderT: "Ընտրեք լավագույն տարբերակը ձեզ համար",
       finderP: "", project: "Նախագիծ", allProjects: "Բոլոր նախագծերը",
       rooms: "Սենյակներ", any: "Բոլորը", areaFrom: "Մակերես՝ սկսած", areaTo: "Մակերես՝ մինչև", priceFrom: "Արժեք՝ սկսած",
-      priceTo: "Արժեք՝ մինչև", floors: "Հարկեր", allFloors: "Բոլոր հարկերը", reset: "Մաքրել", show: "Ցույց տալ", apt: "բնակարան",
+      priceTo: "Արժեք՝ մինչև", floors: "Հարկեր", allFloors: "Բոլոր հարկերը", statusAvailable: "Հասանելի", statusReserved: "Ամրագրված", statusSold: "Վաճառված", reset: "Մաքրել", show: "Ցույց տալ", apt: "բնակարան",
       projectK: "Մեր նախագծերը", projectT: "Չորս հասցե, մեկ մոտեցում", projectP: "Milon-ի չորս նախագծերը տարբերվում են ձևաչափով, տեղադրությամբ և շրջակայքով՝ առաջարկելով բնակության տարբեր միջավայրեր։",
       projectMore: "Նախագծի մասին", companyK: "Milon Mining", companyT: "Մենք պարզապես շենքեր չենք կառուցում․ մենք ստեղծում ենք առօրյա կյանքի հիմքը",
       companyP: "2001 թվականից ընկերությունը զարգացել է՝ շինանյութի ոլորտում կուտակելով տարիների փորձ և մասնագիտական գիտելիք։ Այսօր մենք ստեղծում ենք բնակելի միջավայրեր՝ խորապես հասկանալով նյութը, յուրաքանչյուր գործընթացի կարևորությունն ու այն պատասխանատվությունը մեր բնակիչների առաջ:",
@@ -69,7 +69,7 @@
       choose: "Выбрать квартиру", heroK: "Жилые проекты в Абовяне и Ариндже", heroT: "Пространство, в котором раскрывается жизнь",
       heroP: "Milon Mining создаёт жилую среду, объединяя архитектуру, ежедневный комфорт и долгосрочную ценность в одно целое.", seeProjects: "Смотреть проекты", discover: "Исследовать",
       finderK: "Подбор квартиры", finderT: "Найдите свою будущую квартиру", finderP: "", project: "Проект", allProjects: "Все проекты", rooms: "Комнаты", any: "Любые",
-      areaFrom: "Площадь от", areaTo: "Площадь до", priceFrom: "Стоимость от", priceTo: "Стоимость до", floors: "Этажи", allFloors: "Все этажи", reset: "Сбросить", show: "Показать", apt: "квартир",
+      areaFrom: "Площадь от", areaTo: "Площадь до", priceFrom: "Стоимость от", priceTo: "Стоимость до", floors: "Этажи", allFloors: "Все этажи", statusAvailable: "Доступные", statusReserved: "Забронированные", statusSold: "Проданные", reset: "Сбросить", show: "Показать", apt: "квартир",
       projectK: "Наши проекты", projectT: "Четыре адреса, один подход", projectP: "У Milon четыре разных проекта — с разным форматом жилья, расположением и окружением.", projectMore: "О проекте",
       companyK: "Milon Mining", companyT: "Мы строим не просто здания — мы создаём основу повседневной жизни", companyP: "С 2001 года компания прошла путь от строительных материалов до жилого девелопмента. Мы понимаем материал, процесс и ответственность, которая продолжается после заселения.", aboutCompany: "О компании",
       mapK: "Расположение", mapT: "Реальные адреса на реальной карте", mapP: "Сравните расположение проектов, расстояние от центра Еревана и ориентировочное время в пути.", mapOpen: "Открыть в Google Maps", mapDistance: "Расстояние от центра Еревана", mapTime: "Время на автомобиле", mapTimeNote: "Ориентировочно, без учёта пробок", projectOpen: "Перейти к проекту",
@@ -154,14 +154,14 @@
   }
 
   function filters(overrides={}) {
-    return {project:overrides.project || query.get("project") || "all", rooms:overrides.rooms || (query.get("rooms") ? query.get("rooms").split(",") : []), areaMin:overrides.areaMin || query.get("areaMin") || "", areaMax:overrides.areaMax || query.get("areaMax") || "", priceMin:overrides.priceMin || query.get("priceMin") || "", priceMax:overrides.priceMax || query.get("priceMax") || "", floors:overrides.floors || (query.get("floors") ? query.get("floors").split(",") : [])};
+    return {project:overrides.project || query.get("project") || "all", rooms:overrides.rooms || (query.get("rooms") ? query.get("rooms").split(",") : []), areaMin:overrides.areaMin || query.get("areaMin") || "", areaMax:overrides.areaMax || query.get("areaMax") || "", priceMin:overrides.priceMin || query.get("priceMin") || "", priceMax:overrides.priceMax || query.get("priceMax") || "", floors:overrides.floors || (query.get("floors") ? query.get("floors").split(",") : []), status:overrides.status || query.get("status") || "all"};
   }
   function filterUnits(f) {
     const amin=Number(f.areaMin)||-Infinity, amax=Number(f.areaMax)||Infinity, pmin=(Number(f.priceMin)||-Infinity)*1e6, pmax=(Number(f.priceMax)||Infinity)*1e6;
     const rooms=Array.isArray(f.rooms)?f.rooms:(f.rooms&&f.rooms!=="all"?[String(f.rooms)]:[]);
-    return D.units.filter(u => (f.project==="all"||u.project===f.project) && (!rooms.length||rooms.includes(String(u.rooms))) && u.area>=amin && u.area<=amax && u.price>=pmin && u.price<=pmax && (!f.floors.length||f.floors.includes(String(u.floor))));
+    return D.units.filter(u => (f.project==="all"||u.project===f.project) && (!rooms.length||rooms.includes(String(u.rooms))) && u.area>=amin && u.area<=amax && u.price>=pmin && u.price<=pmax && (!f.floors.length||f.floors.includes(String(u.floor))) && (!f.status||f.status==="all"||u.status===f.status));
   }
-  function readFilters(form) { const fd=new FormData(form); return {project:fd.get("project")||"all",rooms:fd.getAll("rooms"),areaMin:fd.get("areaMin")||"",areaMax:fd.get("areaMax")||"",priceMin:fd.get("priceMin")||"",priceMax:fd.get("priceMax")||"",floors:fd.getAll("floors")}; }
+  function readFilters(form) { const fd=new FormData(form); return {project:fd.get("project")||"all",rooms:fd.getAll("rooms"),areaMin:fd.get("areaMin")||"",areaMax:fd.get("areaMax")||"",priceMin:fd.get("priceMin")||"",priceMax:fd.get("priceMax")||"",floors:fd.getAll("floors"),status:fd.get("status")||"all"}; }
   function roomSummary(f) { return !f.rooms.length?t("any"):f.rooms.join(", "); }
   function floorSummary(f) { return !f.floors.length?t("allFloors"):f.floors.length===1?`${f.floors[0]} ${lang==="ru"?"этаж":"հարկ"}`:`${f.floors.length} ${lang==="ru"?"этажа":"հարկ"}`; }
   function unitNumber(unit) { return String(unit.number || unit.id); }
@@ -178,7 +178,7 @@
   }
   function finder(mode="home", initial=filters()) {
     const floorList=[...new Set(D.units.map(u=>u.floor))].sort((x,y)=>x-y), roomList=[...new Set(D.units.map(u=>u.rooms))].sort((x,y)=>x-y);
-    return `<form class="finder finder--${mode}" data-finder data-mode="${mode}"><div class="field"><label>${t("project")}</label><select name="project"><option value="all">${t("allProjects")}</option>${Object.values(D.projects).map(p=>`<option value="${p.key}" ${initial.project===p.key?"selected":""}>${p.name}</option>`).join("")}</select></div><div class="field field--rooms"><label>${t("rooms")}</label><details class="filter-multiselect room-select"><summary><span data-room-summary>${roomSummary(initial)}</span>${icon("down")}</summary><div class="filter-options room-options"><button type="button" class="filter-clear" data-clear-filter="rooms">${t("any")}</button>${roomList.map(n=>`<label><input type="checkbox" name="rooms" value="${n}" ${initial.rooms.includes(String(n))?"checked":""}><span>${n}</span></label>`).join("")}</div></details></div>
+    return `<form class="finder finder--${mode}" data-finder data-mode="${mode}"><div class="field"><label>${t("project")}</label><select name="project"><option value="all">${t("allProjects")}</option>${Object.values(D.projects).map(p=>`<option value="${p.key}" ${initial.project===p.key?"selected":""}>${p.name}</option>`).join("")}</select></div><div class="field field--status"><label>${t("status")}</label><select name="status"><option value="all" ${initial.status==="all"?"selected":""}>${t("any")}</option><option value="available" ${initial.status==="available"?"selected":""}>${t("statusAvailable")}</option><option value="reserved" ${initial.status==="reserved"?"selected":""}>${t("statusReserved")}</option><option value="sold" ${initial.status==="sold"?"selected":""}>${t("statusSold")}</option></select></div><div class="field field--rooms"><label>${t("rooms")}</label><details class="filter-multiselect room-select"><summary><span data-room-summary>${roomSummary(initial)}</span>${icon("down")}</summary><div class="filter-options room-options"><button type="button" class="filter-clear" data-clear-filter="rooms">${t("any")}</button>${roomList.map(n=>`<label><input type="checkbox" name="rooms" value="${n}" ${initial.rooms.includes(String(n))?"checked":""}><span>${n}</span></label>`).join("")}</div></details></div>
       <div class="field-pair"><div class="field"><label>${t("areaFrom")}</label><div class="input-unit"><input name="areaMin" type="number" min="0" value="${esc(initial.areaMin)}" placeholder="35"><span>м²</span></div></div><div class="field"><label>${t("areaTo")}</label><div class="input-unit"><input name="areaMax" type="number" min="0" value="${esc(initial.areaMax)}" placeholder="180"><span>м²</span></div></div></div>
       <div class="field-pair"><div class="field"><label>${t("priceFrom")}</label><div class="input-unit"><input name="priceMin" type="number" min="0" value="${esc(initial.priceMin)}" placeholder="28"><span>${lang==="ru"?"млн":"մլն"}</span></div></div><div class="field"><label>${t("priceTo")}</label><div class="input-unit"><input name="priceMax" type="number" min="0" value="${esc(initial.priceMax)}" placeholder="86"><span>${lang==="ru"?"млн":"մլն"}</span></div></div></div>
       <div class="field field--floors"><label>${t("floors")}</label><details class="filter-multiselect floor-select"><summary><span data-floor-summary>${floorSummary(initial)}</span>${icon("down")}</summary><div class="filter-options floor-options"><button type="button" class="filter-clear" data-clear-filter="floors">${t("allFloors")}</button>${floorList.map(n=>`<label><input type="checkbox" name="floors" value="${n}" ${initial.floors.includes(String(n))?"checked":""}><span>${n}</span></label>`).join("")}</div></details></div><div class="finder-actions"><button class="reset-button" type="reset">${t("reset")}</button>${mode==="catalog"?"":`<button class="button button--dark finder-submit" type="submit" data-result-button>${t("show")}${icon("arrow")}</button>`}</div></form>`;
@@ -572,7 +572,7 @@
   function syncCatalogUrl(f) {
     const u=new URL(location.href);
     u.searchParams.delete("page");
-    ["project","areaMin","areaMax","priceMin","priceMax"].forEach(k=>f[k]&&f[k]!=="all"?u.searchParams.set(k,f[k]):u.searchParams.delete(k));
+    ["project","status","areaMin","areaMax","priceMin","priceMax"].forEach(k=>f[k]&&f[k]!=="all"?u.searchParams.set(k,f[k]):u.searchParams.delete(k));
     f.rooms.length?u.searchParams.set("rooms",f.rooms.join(",")):u.searchParams.delete("rooms");
     f.floors.length?u.searchParams.set("floors",f.floors.join(",")):u.searchParams.delete("floors");
     try{history.replaceState({},"",u);}catch(error){if(location.protocol!=="file:")throw error;}
@@ -581,7 +581,7 @@
   function bindFinder(form) {
     const update=()=>{const f=readFilters(form),btn=form.querySelector("[data-result-button]");if(btn)btn.innerHTML=`${t("show")}${icon("arrow")}`;const room=form.querySelector("[data-room-summary]");if(room)room.textContent=roomSummary(f);const floor=form.querySelector("[data-floor-summary]");if(floor)floor.textContent=floorSummary(f);if(form.dataset.mode==="catalog"){catalogPageNumber=1;syncCatalogUrl(f);updateCatalog();syncCatalogTowerTools(form);}};
     form.addEventListener("input",update);form.addEventListener("change",update);form.addEventListener("reset",()=>requestAnimationFrame(update));
-    form.addEventListener("submit",e=>{e.preventDefault();const f=readFilters(form);if(form.dataset.mode==="catalog"){catalogPageNumber=1;syncCatalogUrl(f);updateCatalog();}else{const q=new URLSearchParams({lang});["project","areaMin","areaMax","priceMin","priceMax"].forEach(k=>f[k]&&f[k]!=="all"&&q.set(k,f[k]));if(f.rooms.length)q.set("rooms",f.rooms.join(","));if(f.floors.length)q.set("floors",f.floors.join(","));location.href=`apartments.html?${q}`;}});
+    form.addEventListener("submit",e=>{e.preventDefault();const f=readFilters(form);if(form.dataset.mode==="catalog"){catalogPageNumber=1;syncCatalogUrl(f);updateCatalog();}else{const q=new URLSearchParams({lang});["project","status","areaMin","areaMax","priceMin","priceMax"].forEach(k=>f[k]&&f[k]!=="all"&&q.set(k,f[k]));if(f.rooms.length)q.set("rooms",f.rooms.join(","));if(f.floors.length)q.set("floors",f.floors.join(","));location.href=`apartments.html?${q}`;}});
   }
 
   function setCatalogMode(mode="list") {
