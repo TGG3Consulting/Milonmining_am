@@ -22,7 +22,7 @@
       seeProjects: "Դիտել նախագծերը", discover: "Բացահայտել", finderK: "Բնակարանի ընտրություն", finderT: "Ընտրեք լավագույն տարբերակը ձեզ համար",
       finderP: "", project: "Նախագիծ", allProjects: "Բոլոր նախագծերը",
       rooms: "Սենյակներ", any: "Բոլորը", areaFrom: "Մակերես՝ սկսած", areaTo: "Մակերես՝ մինչև", priceFrom: "Արժեք՝ սկսած",
-      priceTo: "Արժեք՝ մինչև", floors: "Հարկեր", allFloors: "Բոլոր հարկերը", statusAvailable: "Հասանելի", statusReserved: "Ամրագրված", statusSold: "Վաճառված", vFill: "Լրացրեք այս դաշտը", vBox: "Նշեք այս վանդակը", vChoose: "Ընտրեք տարբերակ", vShort: "Նվազագույնը {n} նիշ", vRange: "Արժեքը թույլատրելի սահմաններից դուրս է", vFormat: "Ստուգեք լրացման ձևաչափը", reset: "Մաքրել", show: "Ցույց տալ", apt: "բնակարան",
+      priceTo: "Արժեք՝ մինչև", floors: "Հարկեր", allFloors: "Բոլոր հարկերը", statusAvailable: "Հասանելի", statusReserved: "Ամրագրված", statusSold: "Վաճառված", statusUnknown: "Տվյալները ճշտվում են", vFill: "Լրացրեք այս դաշտը", vBox: "Նշեք այս վանդակը", vChoose: "Ընտրեք տարբերակ", vShort: "Նվազագույնը {n} նիշ", vRange: "Արժեքը թույլատրելի սահմաններից դուրս է", vFormat: "Ստուգեք լրացման ձևաչափը", reset: "Մաքրել", show: "Ցույց տալ", apt: "բնակարան",
       projectK: "Մեր նախագծերը", projectT: "Չորս հասցե, մեկ մոտեցում", projectP: "Milon-ի չորս նախագծերը տարբերվում են ձևաչափով, տեղադրությամբ և շրջակայքով՝ առաջարկելով բնակության տարբեր միջավայրեր։",
       projectMore: "Նախագծի մասին", companyK: "Milon Mining", companyT: "Մենք պարզապես շենքեր չենք կառուցում․ մենք ստեղծում ենք առօրյա կյանքի հիմքը",
       companyP: "2001 թվականից ընկերությունը զարգացել է՝ շինանյութի ոլորտում կուտակելով տարիների փորձ և մասնագիտական գիտելիք։ Այսօր մենք ստեղծում ենք բնակելի միջավայրեր՝ խորապես հասկանալով նյութը, յուրաքանչյուր գործընթացի կարևորությունն ու այն պատասխանատվությունը մեր բնակիչների առաջ:",
@@ -69,7 +69,7 @@
       choose: "Выбрать квартиру", heroK: "Жилые проекты в Абовяне и Ариндже", heroT: "Пространство, в котором раскрывается жизнь",
       heroP: "Milon Mining создаёт жилую среду, объединяя архитектуру, ежедневный комфорт и долгосрочную ценность в одно целое.", seeProjects: "Смотреть проекты", discover: "Исследовать",
       finderK: "Подбор квартиры", finderT: "Найдите свою будущую квартиру", finderP: "", project: "Проект", allProjects: "Все проекты", rooms: "Комнаты", any: "Любые",
-      areaFrom: "Площадь от", areaTo: "Площадь до", priceFrom: "Стоимость от", priceTo: "Стоимость до", floors: "Этажи", allFloors: "Все этажи", statusAvailable: "Доступные", statusReserved: "Забронированные", statusSold: "Проданные", vFill: "Заполните это поле", vBox: "Отметьте это поле", vChoose: "Выберите вариант", vShort: "Минимум {n} символа", vRange: "Значение вне допустимых границ", vFormat: "Проверьте формат", reset: "Сбросить", show: "Показать", apt: "квартир",
+      areaFrom: "Площадь от", areaTo: "Площадь до", priceFrom: "Стоимость от", priceTo: "Стоимость до", floors: "Этажи", allFloors: "Все этажи", statusAvailable: "Доступные", statusReserved: "Забронированные", statusSold: "Проданные", statusUnknown: "Данные уточняются", vFill: "Заполните это поле", vBox: "Отметьте это поле", vChoose: "Выберите вариант", vShort: "Минимум {n} символа", vRange: "Значение вне допустимых границ", vFormat: "Проверьте формат", reset: "Сбросить", show: "Показать", apt: "квартир",
       projectK: "Наши проекты", projectT: "Четыре адреса, один подход", projectP: "У Milon четыре разных проекта — с разным форматом жилья, расположением и окружением.", projectMore: "О проекте",
       companyK: "Milon Mining", companyT: "Мы строим не просто здания — мы создаём основу повседневной жизни", companyP: "С 2001 года компания прошла путь от строительных материалов до жилого девелопмента. Мы понимаем материал, процесс и ответственность, которая продолжается после заселения.", aboutCompany: "О компании",
       mapK: "Расположение", mapT: "Реальные адреса на реальной карте", mapP: "Сравните расположение проектов, расстояние от центра Еревана и ориентировочное время в пути.", mapOpen: "Открыть в Google Maps", mapDistance: "Расстояние от центра Еревана", mapTime: "Время на автомобиле", mapTimeNote: "Ориентировочно, без учёта пробок", projectOpen: "Перейти к проекту",
@@ -737,11 +737,14 @@
     const shapes=drawn.map(item=>{
       const u=item.u?units.find(x=>x.id===item.u):null;
       if(item.u&&!u)return "";
-      const label=u?`${unitNumber(u)} · ${sqm(u.area)} · ${u.rooms} ${lang==="ru"?"комн.":"սեն."} · ${money(u.price)}`:(item.n||"");
+      const label=u?`${unitNumber(u)} · ${sqm(u.area)} · ${u.rooms} ${lang==="ru"?"комн.":"սեն."} · ${money(u.price)}`
+        :[item.n,t("statusUnknown")].filter(Boolean).join(" · ");
       // квартира может быть нарисована несколькими кусками — все кликабельны
       return (item.p||[]).map(poly=>{
         const points=poly.map(point=>point.join(",")).join(" ");
-        if(!u)return `<polygon class="floor-hotspot" points="${points}"><title>${esc(label)}</title></polygon>`;
+        // Нарисована на чертеже, но в базе её нет. Раньше она красилась
+        // как доступная и не открывалась по клику — выглядела как поломка.
+        if(!u)return `<polygon class="floor-hotspot floor-hotspot--unknown" points="${points}"><title>${esc(label)}</title></polygon>`;
         return `<polygon class="floor-hotspot floor-hotspot--${u.status}" points="${points}" data-unit-open="${esc(u.id)}" tabindex="0" role="button" aria-label="${esc(label)}"><title>${esc(label)}</title></polygon>`;
       }).join("");
     }).join("");
@@ -755,7 +758,9 @@
     const marked=units.filter(u=>plan.units[u.id]);
     if(!marked.length)return "";
     const rows=["available","reserved","sold"].map(s=>({s,n:marked.filter(u=>u.status===s).length})).filter(x=>x.n);
-    return `<ul class="floor-legend">${rows.map(x=>`<li class="floor-legend__item floor-legend__item--${x.s}"><i aria-hidden="true"></i>${t(x.s)}<b>${x.n}</b></li>`).join("")}</ul>`;
+    const unknown=(plan.plan||[]).filter(item=>!item.u).length;
+    if(unknown)rows.push({s:"unknown",n:unknown,label:t("statusUnknown")});
+    return `<ul class="floor-legend">${rows.map(x=>`<li class="floor-legend__item floor-legend__item--${x.s}"><i aria-hidden="true"></i>${x.label||t(x.s)}<b>${x.n}</b></li>`).join("")}</ul>`;
   }
 
   function showFloor(stage,floor) {

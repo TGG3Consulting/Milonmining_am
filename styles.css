@@ -1197,9 +1197,13 @@ body[data-page="catalog"] .empty-state {
   height: 100%;
 }
 
+/* Чертёж под заливкой сам раскрашен — розовым, песочным, жёлтым. На прежних
+   20–26% прозрачности статус не читался: свободная квартира над жёлтым планом
+   выглядела жёлтой, проданная над песочным — оранжевой. Берём плотность, при
+   которой цвет статуса задаёт тон, а линии чертежа ещё видны. */
 .floor-hotspot {
-  fill: rgba(0, 176, 80, 0.24);
-  stroke: rgba(0, 110, 52, 0.7);
+  fill: rgba(22, 163, 74, 0.52);
+  stroke: rgba(8, 82, 40, 0.92);
   stroke-width: 6;
   stroke-linejoin: round;
   cursor: pointer;
@@ -1208,28 +1212,37 @@ body[data-page="catalog"] .empty-state {
 
 .floor-hotspot:hover,
 .floor-hotspot:focus-visible {
-  fill: rgba(0, 176, 80, 0.48);
+  fill: rgba(22, 163, 74, 0.72);
   outline: none;
 }
 
 .floor-hotspot--reserved {
-  fill: rgba(236, 168, 24, 0.26);
-  stroke: rgba(168, 112, 0, 0.7);
+  fill: rgba(240, 176, 16, 0.6);
+  stroke: rgba(150, 100, 0, 0.92);
 }
 
 .floor-hotspot--reserved:hover,
 .floor-hotspot--reserved:focus-visible {
-  fill: rgba(236, 168, 24, 0.5);
+  fill: rgba(240, 176, 16, 0.78);
 }
 
 .floor-hotspot--sold {
-  fill: rgba(198, 44, 44, 0.2);
-  stroke: rgba(142, 24, 24, 0.55);
+  fill: rgba(206, 42, 42, 0.5);
+  stroke: rgba(128, 18, 18, 0.88);
 }
 
 .floor-hotspot--sold:hover,
 .floor-hotspot--sold:focus-visible {
-  fill: rgba(198, 44, 44, 0.34);
+  fill: rgba(206, 42, 42, 0.68);
+}
+
+/* Квартира есть на чертеже, но её нет в базе: ни цены, ни статуса. Она не
+   открывается по клику, поэтому и выглядеть доступной не должна. */
+.floor-hotspot--unknown,
+.floor-hotspot--unknown:hover {
+  fill: rgba(122, 130, 140, 0.44);
+  stroke: rgba(70, 76, 84, 0.75);
+  cursor: default;
 }
 
 .floor-legend {
@@ -1252,19 +1265,24 @@ body[data-page="catalog"] .empty-state {
 .floor-legend__item i {
   width: 14px;
   height: 14px;
-  border: 1px solid rgba(0, 110, 52, 0.7);
+  border: 1px solid rgba(8, 82, 40, 0.92);
   border-radius: 4px;
-  background: rgba(0, 176, 80, 0.32);
+  background: rgba(22, 163, 74, 0.52);
 }
 
 .floor-legend__item--reserved i {
-  border-color: rgba(168, 112, 0, 0.7);
-  background: rgba(236, 168, 24, 0.34);
+  border-color: rgba(150, 100, 0, 0.92);
+  background: rgba(240, 176, 16, 0.6);
 }
 
 .floor-legend__item--sold i {
-  border-color: rgba(142, 24, 24, 0.55);
-  background: rgba(198, 44, 44, 0.28);
+  border-color: rgba(128, 18, 18, 0.88);
+  background: rgba(206, 42, 42, 0.5);
+}
+
+.floor-legend__item--unknown i {
+  border-color: rgba(70, 76, 84, 0.75);
+  background: rgba(122, 130, 140, 0.44);
 }
 
 .floor-legend__item b {
@@ -3212,6 +3230,24 @@ body[data-page="privacy"] .site-header:not(.is-scrolled) {
   border-radius: 50%;
   background: currentColor;
   content: "";
+}
+
+/* Значок статуса на карточке был одного и того же нефритового цвета у всех
+   трёх статусов, так что проданная квартира выглядела как свободная. Цвета
+   те же, что и на чертеже этажа: зелёный, жёлтый, красный. */
+.status.status--available {
+  color: #0f8a46;
+  background: rgba(22, 163, 74, 0.12);
+}
+
+.status.status--reserved {
+  color: #9a6400;
+  background: rgba(240, 176, 16, 0.16);
+}
+
+.status.status--sold {
+  color: #b32626;
+  background: rgba(206, 42, 42, 0.12);
 }
 
 .unit-price span {
