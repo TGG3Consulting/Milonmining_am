@@ -1250,9 +1250,9 @@ body[data-page="catalog"] .empty-state {
    но приглушена: статус не показывает, на наведение не отвечает. */
 .floor-hotspot--muted,
 .floor-hotspot--muted:hover {
-  fill: rgba(135, 142, 152, 0.14);
-  stroke: rgba(90, 96, 104, 0.4);
-  stroke-dasharray: 10 8;
+  fill: rgba(128, 136, 147, 0.2);
+  stroke: rgba(58, 64, 72, 0.62);
+  stroke-dasharray: 16 11;
   cursor: default;
 }
 
@@ -1297,9 +1297,9 @@ body[data-page="catalog"] .empty-state {
 }
 
 .floor-legend__item--muted i {
-  border-color: rgba(90, 96, 104, 0.4);
+  border-color: rgba(58, 64, 72, 0.62);
   border-style: dashed;
-  background: rgba(135, 142, 152, 0.14);
+  background: rgba(128, 136, 147, 0.2);
 }
 
 .floor-legend__item b {
