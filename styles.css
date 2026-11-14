@@ -1245,6 +1245,17 @@ body[data-page="catalog"] .empty-state {
   cursor: default;
 }
 
+/* Квартира этажа, не прошедшая фильтр. Раньше её просто не рисовали, и план
+   выходил наполовину закрашенным, с дырами вместо комнат. Теперь обведена,
+   но приглушена: статус не показывает, на наведение не отвечает. */
+.floor-hotspot--muted,
+.floor-hotspot--muted:hover {
+  fill: rgba(135, 142, 152, 0.14);
+  stroke: rgba(90, 96, 104, 0.4);
+  stroke-dasharray: 10 8;
+  cursor: default;
+}
+
 .floor-legend {
   display: flex;
   flex-wrap: wrap;
@@ -1283,6 +1294,12 @@ body[data-page="catalog"] .empty-state {
 .floor-legend__item--unknown i {
   border-color: rgba(70, 76, 84, 0.75);
   background: rgba(122, 130, 140, 0.44);
+}
+
+.floor-legend__item--muted i {
+  border-color: rgba(90, 96, 104, 0.4);
+  border-style: dashed;
+  background: rgba(135, 142, 152, 0.14);
 }
 
 .floor-legend__item b {

@@ -25,7 +25,7 @@
       seeProjects: "Դիտել նախագծերը", discover: "Բացահայտել", finderK: "Բնակարանի ընտրություն", finderT: "Ընտրեք լավագույն տարբերակը ձեզ համար",
       finderP: "", project: "Նախագիծ", allProjects: "Բոլոր նախագծերը",
       rooms: "Սենյակներ", any: "Բոլորը", areaFrom: "Մակերես՝ սկսած", areaTo: "Մակերես՝ մինչև", priceFrom: "Արժեք՝ սկսած",
-      priceTo: "Արժեք՝ մինչև", floors: "Հարկեր", allFloors: "Բոլոր հարկերը", statusAvailable: "Հասանելի", statusReserved: "Ամրագրված", statusSold: "Վաճառված", statusUnknown: "Տվյալները ճշտվում են", vFill: "Լրացրեք այս դաշտը", vBox: "Նշեք այս վանդակը", vChoose: "Ընտրեք տարբերակ", vShort: "Նվազագույնը {n} նիշ", vRange: "Արժեքը թույլատրելի սահմաններից դուրս է", vFormat: "Ստուգեք լրացման ձևաչափը", reset: "Մաքրել", show: "Ցույց տալ", apt: "բնակարան",
+      priceTo: "Արժեք՝ մինչև", floors: "Հարկեր", allFloors: "Բոլոր հարկերը", statusAvailable: "Հասանելի", statusReserved: "Ամրագրված", statusSold: "Վաճառված", statusUnknown: "Տվյալները ճշտվում են", statusFiltered: "Զտիչից դուրս", vFill: "Լրացրեք այս դաշտը", vBox: "Նշեք այս վանդակը", vChoose: "Ընտրեք տարբերակ", vShort: "Նվազագույնը {n} նիշ", vRange: "Արժեքը թույլատրելի սահմաններից դուրս է", vFormat: "Ստուգեք լրացման ձևաչափը", reset: "Մաքրել", show: "Ցույց տալ", apt: "բնակարան",
       projectK: "Մեր նախագծերը", projectT: "Չորս հասցե, մեկ մոտեցում", projectP: "Milon-ի չորս նախագծերը տարբերվում են ձևաչափով, տեղադրությամբ և շրջակայքով՝ առաջարկելով բնակության տարբեր միջավայրեր։",
       projectMore: "Նախագծի մասին", companyK: "Milon Mining", companyT: "Մենք պարզապես շենքեր չենք կառուցում․ մենք ստեղծում ենք առօրյա կյանքի հիմքը",
       companyP: "2001 թվականից ընկերությունը զարգացել է՝ շինանյութի ոլորտում կուտակելով տարիների փորձ և մասնագիտական գիտելիք։ Այսօր մենք ստեղծում ենք բնակելի միջավայրեր՝ խորապես հասկանալով նյութը, յուրաքանչյուր գործընթացի կարևորությունն ու այն պատասխանատվությունը մեր բնակիչների առաջ:",
@@ -72,7 +72,7 @@
       choose: "Выбрать квартиру", heroK: "Жилые проекты в Абовяне и Ариндже", heroT: "Пространство, в котором раскрывается жизнь",
       heroP: "Milon Mining создаёт жилую среду, объединяя архитектуру, ежедневный комфорт и долгосрочную ценность в одно целое.", seeProjects: "Смотреть проекты", discover: "Исследовать",
       finderK: "Подбор квартиры", finderT: "Найдите свою будущую квартиру", finderP: "", project: "Проект", allProjects: "Все проекты", rooms: "Комнаты", any: "Любые",
-      areaFrom: "Площадь от", areaTo: "Площадь до", priceFrom: "Стоимость от", priceTo: "Стоимость до", floors: "Этажи", allFloors: "Все этажи", statusAvailable: "Доступные", statusReserved: "Забронированные", statusSold: "Проданные", statusUnknown: "Данные уточняются", vFill: "Заполните это поле", vBox: "Отметьте это поле", vChoose: "Выберите вариант", vShort: "Минимум {n} символа", vRange: "Значение вне допустимых границ", vFormat: "Проверьте формат", reset: "Сбросить", show: "Показать", apt: "квартир",
+      areaFrom: "Площадь от", areaTo: "Площадь до", priceFrom: "Стоимость от", priceTo: "Стоимость до", floors: "Этажи", allFloors: "Все этажи", statusAvailable: "Доступные", statusReserved: "Забронированные", statusSold: "Проданные", statusUnknown: "Данные уточняются", statusFiltered: "Вне фильтра", vFill: "Заполните это поле", vBox: "Отметьте это поле", vChoose: "Выберите вариант", vShort: "Минимум {n} символа", vRange: "Значение вне допустимых границ", vFormat: "Проверьте формат", reset: "Сбросить", show: "Показать", apt: "квартир",
       projectK: "Наши проекты", projectT: "Четыре адреса, один подход", projectP: "У Milon четыре разных проекта — с разным форматом жилья, расположением и окружением.", projectMore: "О проекте",
       companyK: "Milon Mining", companyT: "Мы строим не просто здания — мы создаём основу повседневной жизни", companyP: "С 2001 года компания прошла путь от строительных материалов до жилого девелопмента. Мы понимаем материал, процесс и ответственность, которая продолжается после заселения.", aboutCompany: "О компании",
       mapK: "Расположение", mapT: "Реальные адреса на реальной карте", mapP: "Сравните расположение проектов, расстояние от центра Еревана и ориентировочное время в пути.", mapOpen: "Открыть в Google Maps", mapDistance: "Расстояние от центра Еревана", mapTime: "Время на автомобиле", mapTimeNote: "Ориентировочно, без учёта пробок", projectOpen: "Перейти к проекту",
@@ -775,24 +775,26 @@
     prev?.addEventListener("click",()=>track.scrollBy({left:-step(),behavior:"smooth"}));next?.addEventListener("click",()=>track.scrollBy({left:step(),behavior:"smooth"}));track.addEventListener("scroll",update,{passive:true});addEventListener("resize",update,{passive:true});update();
   }
 
-  function floorCanvas(p,floor,units,floorImage) {
+  // `units` — весь этаж, `matched` — то, что прошло фильтр (null, если фильтра
+  // нет). Чертёж обводится целиком: квартиры мимо фильтра остаются на месте,
+  // но приглушены и не реагируют ни на наведение, ни на клик.
+  function floorCanvas(p,floor,units,floorImage,matched) {
     const img=`<img src="${a(floorImage)}" alt="${esc(`${t("floorPlan")} ${floor}`)}">`;
     const plan=window.MILON_FLOORPLANS&&window.MILON_FLOORPLANS[`${p.key}-${floor}`];
     if(!plan)return img;
-    // Обводим все квартиры с чертежа. Та, которой нет в базе, показывается
-    // контуром без карточки — иначе на плане осталась бы дыра.
     const drawn=plan.plan||units.map(u=>({u:u.id,p:plan.units[u.id]})).filter(x=>x.p);
     const shapes=drawn.map(item=>{
       const u=item.u?units.find(x=>x.id===item.u):null;
-      if(item.u&&!u)return "";
       const label=u?`${unitNumber(u)} · ${sqm(u.area)} · ${u.rooms} ${lang==="ru"?"комн.":"սեն."} · ${money(u.price)}`
         :[item.n,t("statusUnknown")].filter(Boolean).join(" · ");
+      const off=u&&matched&&!matched.has(u.id);
       // квартира может быть нарисована несколькими кусками — все кликабельны
       return (item.p||[]).map(poly=>{
         const points=poly.map(point=>point.join(",")).join(" ");
         // Нарисована на чертеже, но в базе её нет. Раньше она красилась
         // как доступная и не открывалась по клику — выглядела как поломка.
         if(!u)return `<polygon class="floor-hotspot floor-hotspot--unknown" points="${points}"><title>${esc(label)}</title></polygon>`;
+        if(off)return `<polygon class="floor-hotspot floor-hotspot--muted" points="${points}"><title>${esc(label)} · ${esc(t("statusFiltered"))}</title></polygon>`;
         return `<polygon class="floor-hotspot floor-hotspot--${u.status}" points="${points}" data-unit-open="${esc(u.id)}" tabindex="0" role="button" aria-label="${esc(label)}"><title>${esc(label)}</title></polygon>`;
       }).join("");
     }).join("");
@@ -800,21 +802,26 @@
     return `<div class="floor-plan-canvas" style="aspect-ratio:${plan.w}/${plan.h}">${img}<svg class="floor-hotspots" viewBox="0 0 ${plan.w} ${plan.h}" preserveAspectRatio="xMidYMid meet">${shapes}</svg></div>`;
   }
 
-  function floorLegend(p,floor,units) {
+  function floorLegend(p,floor,units,matched) {
     const plan=window.MILON_FLOORPLANS&&window.MILON_FLOORPLANS[`${p.key}-${floor}`];
     if(!plan)return "";
     const marked=units.filter(u=>plan.units[u.id]);
     if(!marked.length)return "";
-    const rows=["available","reserved","sold"].map(s=>({s,n:marked.filter(u=>u.status===s).length})).filter(x=>x.n);
-    const unknown=(plan.plan||[]).filter(item=>!item.u).length;
+    const live=matched?marked.filter(u=>matched.has(u.id)):marked;
+    const rows=["available","reserved","sold"].map(s=>({s,n:live.filter(u=>u.status===s).length})).filter(x=>x.n);
+    const off=marked.length-live.length;
+    if(off)rows.push({s:"muted",n:off,label:t("statusFiltered")});
+    const unknown=(plan.plan||[]).filter(item=>!item.u||!units.some(u=>u.id===item.u)).length;
     if(unknown)rows.push({s:"unknown",n:unknown,label:t("statusUnknown")});
     return `<ul class="floor-legend">${rows.map(x=>`<li class="floor-legend__item floor-legend__item--${x.s}"><i aria-hidden="true"></i>${x.label||t(x.s)}<b>${x.n}</b></li>`).join("")}</ul>`;
   }
 
   function showFloor(stage,floor) {
     if(!stage)return;
-    const p=D.projects[stage.dataset.project],catalog=stage.dataset.catalogScheme==="true",catalogForm=catalog?document.querySelector('[data-finder][data-mode="catalog"]'):null,catalogFilters=catalogForm?{...readFilters(catalogForm),project:p.key}:null,sourceUnits=catalog&&catalogFilters?filterUnits(catalogFilters):D.units,units=sourceUnits.filter(u=>u.project===p.key&&u.floor===floor),floorImage=units.find(unit=>unit.floorImage)?.floorImage,catalogBack=catalog?`<button type="button" class="back-button back-button--catalog" data-catalog-view="list">${icon("back")}${t("catalogBack")}</button>`:"",emptyAction=catalog?`<button class="text-link" type="button" data-catalog-view="list">${t("catalogBack")}${icon("arrow")}</button>`:`<a class="text-link" href="${link(`apartments.html?project=${p.key}`)}">${t("catalogOpen")}${icon("arrow")}</a>`,emptyState=units.length?"":`<div class="floor-no-units"><p>${t("floorNoUnits")}</p>${emptyAction}</div>`;
-    stage.innerHTML=`<div class="floor-plan-view"><div class="floor-plan-nav"><button type="button" class="back-button" data-floor-back>${icon("back")}${t("back")}</button>${catalogBack}</div><div class="floor-plan-copy"><span>${floor} ${lang==="ru"?"этаж":"հարկ"}</span><h3>${p.name} · ${t("floorPlan")}</h3><p>${t("planNote")}</p></div>${floorImage?`<div class="floor-plan-visual">${floorCanvas(p,floor,units,floorImage)}<span>${floor} ${lang==="ru"?"этаж":"հարկ"} · ${units.length} ${t("apt")}</span></div>${floorLegend(p,floor,units)}`:emptyState}<div class="floor-unit-list unit-list">${units.map(unitRow).join("")}</div></div>`;
+    const p=D.projects[stage.dataset.project],catalog=stage.dataset.catalogScheme==="true",catalogForm=catalog?document.querySelector('[data-finder][data-mode="catalog"]'):null,catalogFilters=catalogForm?{...readFilters(catalogForm),project:p.key}:null,floorUnits=D.units.filter(u=>u.project===p.key&&u.floor===floor),matched=catalogFilters?new Set(filterUnits(catalogFilters).filter(u=>u.floor===floor).map(u=>u.id)):null,units=matched?floorUnits.filter(u=>matched.has(u.id)):floorUnits,
+    // чертёж берём с этажа, а не из выборки: иначе строгий фильтр прятал план
+    floorImage=floorUnits.find(unit=>unit.floorImage)?.floorImage,catalogBack=catalog?`<button type="button" class="back-button back-button--catalog" data-catalog-view="list">${icon("back")}${t("catalogBack")}</button>`:"",emptyAction=catalog?`<button class="text-link" type="button" data-catalog-view="list">${t("catalogBack")}${icon("arrow")}</button>`:`<a class="text-link" href="${link(`apartments.html?project=${p.key}`)}">${t("catalogOpen")}${icon("arrow")}</a>`,emptyState=units.length?"":`<div class="floor-no-units"><p>${t("floorNoUnits")}</p>${emptyAction}</div>`;
+    stage.innerHTML=`<div class="floor-plan-view"><div class="floor-plan-nav"><button type="button" class="back-button" data-floor-back>${icon("back")}${t("back")}</button>${catalogBack}</div><div class="floor-plan-copy"><span>${floor} ${lang==="ru"?"этаж":"հարկ"}</span><h3>${p.name} · ${t("floorPlan")}</h3><p>${t("planNote")}</p></div>${floorImage?`<div class="floor-plan-visual">${floorCanvas(p,floor,floorUnits,floorImage,matched)}<span>${floor} ${lang==="ru"?"этаж":"հարկ"} · ${units.length} ${t("apt")}</span></div>${floorLegend(p,floor,floorUnits,matched)}`:emptyState}<div class="floor-unit-list unit-list">${units.map(unitRow).join("")}</div></div>`;
     stage.querySelector("[data-floor-back]").addEventListener("click",()=>{const fresh=document.createElement("div");fresh.innerHTML=floorStage(p,{catalog,floors:catalog?catalogSchemeFloors(catalogFilterState()):[]});const newStage=fresh.querySelector("[data-floor-stage]");stage.replaceWith(newStage);bindFloorButtons(newStage);});
     bindCatalogModes();bindBookingButtons();bindMortgageButtons();bindUnitDetailButtons();bindUnitCardMedia();
   }
