@@ -25,7 +25,7 @@
       seeProjects: "Դիտել նախագծերը", discover: "Բացահայտել", finderK: "Բնակարանի ընտրություն", finderT: "Ընտրեք լավագույն տարբերակը ձեզ համար",
       finderP: "", project: "Նախագիծ", allProjects: "Բոլոր նախագծերը",
       rooms: "Սենյակներ", any: "Բոլորը", areaFrom: "Մակերես՝ սկսած", areaTo: "Մակերես՝ մինչև", priceFrom: "Արժեք՝ սկսած",
-      priceTo: "Արժեք՝ մինչև", floors: "Հարկեր", allFloors: "Բոլոր հարկերը", statusAvailable: "Հասանելի", statusReserved: "Ամրագրված", statusSold: "Վաճառված", statusUnknown: "Տվյալները ճշտվում են", statusFiltered: "Զտիչից դուրս", vFill: "Լրացրեք այս դաշտը", vBox: "Նշեք այս վանդակը", vChoose: "Ընտրեք տարբերակ", vShort: "Նվազագույնը {n} նիշ", vRange: "Արժեքը թույլատրելի սահմաններից դուրս է", vFormat: "Ստուգեք լրացման ձևաչափը", reset: "Մաքրել", show: "Ցույց տալ", apt: "բնակարան",
+      priceTo: "Արժեք՝ մինչև", floors: "Հարկեր", allFloors: "Բոլոր հարկերը", statusAvailable: "Հասանելի", statusReserved: "Ամրագրված", statusSold: "Վաճառված", statusUnknown: "Տվյալները ճշտվում են", statusFiltered: "Զտիչից դուրս", facadeMatches: "Համապատասխան բնակարաններ կան՝", facadeNoMatches: "Այս շենքում համապատասխան բնակարան չկա։ Փոխեք զտիչը։", vFill: "Լրացրեք այս դաշտը", vBox: "Նշեք այս վանդակը", vChoose: "Ընտրեք տարբերակ", vShort: "Նվազագույնը {n} նիշ", vRange: "Արժեքը թույլատրելի սահմաններից դուրս է", vFormat: "Ստուգեք լրացման ձևաչափը", reset: "Մաքրել", show: "Ցույց տալ", apt: "բնակարան",
       projectK: "Մեր նախագծերը", projectT: "Չորս հասցե, մեկ մոտեցում", projectP: "Milon-ի չորս նախագծերը տարբերվում են ձևաչափով, տեղադրությամբ և շրջակայքով՝ առաջարկելով բնակության տարբեր միջավայրեր։",
       projectMore: "Նախագծի մասին", companyK: "Milon Mining", companyT: "Մենք պարզապես շենքեր չենք կառուցում․ մենք ստեղծում ենք առօրյա կյանքի հիմքը",
       companyP: "2001 թվականից ընկերությունը զարգացել է՝ շինանյութի ոլորտում կուտակելով տարիների փորձ և մասնագիտական գիտելիք։ Այսօր մենք ստեղծում ենք բնակելի միջավայրեր՝ խորապես հասկանալով նյութը, յուրաքանչյուր գործընթացի կարևորությունն ու այն պատասխանատվությունը մեր բնակիչների առաջ:",
@@ -72,7 +72,7 @@
       choose: "Выбрать квартиру", heroK: "Жилые проекты в Абовяне и Ариндже", heroT: "Пространство, в котором раскрывается жизнь",
       heroP: "Milon Mining создаёт жилую среду, объединяя архитектуру, ежедневный комфорт и долгосрочную ценность в одно целое.", seeProjects: "Смотреть проекты", discover: "Исследовать",
       finderK: "Подбор квартиры", finderT: "Найдите свою будущую квартиру", finderP: "", project: "Проект", allProjects: "Все проекты", rooms: "Комнаты", any: "Любые",
-      areaFrom: "Площадь от", areaTo: "Площадь до", priceFrom: "Стоимость от", priceTo: "Стоимость до", floors: "Этажи", allFloors: "Все этажи", statusAvailable: "Доступные", statusReserved: "Забронированные", statusSold: "Проданные", statusUnknown: "Данные уточняются", statusFiltered: "Вне фильтра", vFill: "Заполните это поле", vBox: "Отметьте это поле", vChoose: "Выберите вариант", vShort: "Минимум {n} символа", vRange: "Значение вне допустимых границ", vFormat: "Проверьте формат", reset: "Сбросить", show: "Показать", apt: "квартир",
+      areaFrom: "Площадь от", areaTo: "Площадь до", priceFrom: "Стоимость от", priceTo: "Стоимость до", floors: "Этажи", allFloors: "Все этажи", statusAvailable: "Доступные", statusReserved: "Забронированные", statusSold: "Проданные", statusUnknown: "Данные уточняются", statusFiltered: "Вне фильтра", facadeMatches: "Подходящие квартиры есть на:", facadeNoMatches: "В этом здании подходящих квартир нет. Измените фильтр.", vFill: "Заполните это поле", vBox: "Отметьте это поле", vChoose: "Выберите вариант", vShort: "Минимум {n} символа", vRange: "Значение вне допустимых границ", vFormat: "Проверьте формат", reset: "Сбросить", show: "Показать", apt: "квартир",
       projectK: "Наши проекты", projectT: "Четыре адреса, один подход", projectP: "У Milon четыре разных проекта — с разным форматом жилья, расположением и окружением.", projectMore: "О проекте",
       companyK: "Milon Mining", companyT: "Мы строим не просто здания — мы создаём основу повседневной жизни", companyP: "С 2001 года компания прошла путь от строительных материалов до жилого девелопмента. Мы понимаем материал, процесс и ответственность, которая продолжается после заселения.", aboutCompany: "О компании",
       mapK: "Расположение", mapT: "Реальные адреса на реальной карте", mapP: "Сравните расположение проектов, расстояние от центра Еревана и ориентировочное время в пути.", mapOpen: "Открыть в Google Maps", mapDistance: "Расстояние от центра Еревана", mapTime: "Время на автомобиле", mapTimeNote: "Ориентировочно, без учёта пробок", projectOpen: "Перейти к проекту",
@@ -354,7 +354,7 @@
     if(!list.length)return `<div class="empty-state">${t("empty")}</div>`;
     const current=list.find(p=>p.key===catalogSchemeProject)||list[0];
     catalogSchemeProject=current.key;
-    const stage=floorStage(current,{catalog:true,floors:catalogSchemeFloors(f)});
+    const stage=floorStage(current,{catalog:true,floors:catalogSchemeFloors(f),counts:schemeFloorCounts(current,f)});
     if(!stage)return `<div class="empty-state">${t("empty")}</div>`;
     const tabs=list.length<2?"":`<div class="catalog-scheme-switch" role="group" aria-label="${t("towerChooseT")}">${list.map(p=>`<button type="button" class="${p.key===current.key?"is-active":""}" data-scheme-project="${p.key}" aria-pressed="${p.key===current.key}">${esc(p.name)}</button>`).join("")}</div>`;
     return `${tabs}<p class="catalog-scheme-note"><strong>${esc(current.name)}</strong> · ${t("catalogSchemeIntro")}</p><div data-scheme-stage>${stage}</div>`;
@@ -394,7 +394,7 @@
     return `<section class="project-hero">${media}<div class="hero-shade"></div>${projectStatusBadge(p,"hero")}<div class="page-shell project-hero__content"><div class="project-hero__lead"><span class="hero-kicker">${l(p.eyebrow)}</span><h1>${p.name}</h1><p>${l(p.title)}</p></div><div class="project-hero__meta"><span>${l(p.location)}</span><span>${t("completion")}: <strong>${l(p.completion)}</strong></span></div></div></section>`;
   }
 
-  function facadeFloors(p,floorList) {
+  function facadeFloors(p,floorList,counts) {
     if(!D.facadeOverlay)return "";
     const f=window.MILON_FACADES&&window.MILON_FACADES[p.key];
     if(!f)return "";
@@ -405,7 +405,12 @@
     const word=lang==="ru"?"этаж":"հարկ";
     const shapes=mapped.map(n=>{
       const points=f.floors[n].map(pt=>pt.join(",")).join(" ");
-      return `<polygon class="facade-floor" points="${points}" data-floor="${n}" tabindex="0" role="button" aria-label="${n} ${word}"><title>${n} ${word}</title></polygon>`;
+      // Сколько квартир этажа проходит фильтр: null — фильтра нет.
+      const hits=counts?counts.get(n)||0:null;
+      const label=hits===null?`${n} ${word}`:`${n} ${word} · ${hits} ${t("apt")}`;
+      // Пустой этаж открывать незачем — он и не открывается.
+      if(hits===0)return `<polygon class="facade-floor facade-floor--empty" points="${points}"><title>${esc(label)}</title></polygon>`;
+      return `<polygon class="facade-floor${hits?" facade-floor--match":""}" points="${points}" data-floor="${n}" tabindex="0" role="button" aria-label="${esc(label)}"><title>${esc(label)}</title></polygon>`;
     }).join("");
     // meet mirrors object-fit: contain on the photo, so the overlay is scaled
     // and letterboxed exactly like the image at any stage size
@@ -423,17 +428,30 @@
     return !!(f&&f.floors[n]);
   }
 
-  function buildFloorButtons(list,allFloors,catalog,p) {
+  function buildFloorButtons(list,allFloors,catalog,p,counts) {
     const word=lang==="ru"?"этаж":"հարկ";
     return list.map(n=>{
       // the Tower catalog scheme pins each button to its floor on the photo
       const index=allFloors.indexOf(n);
       const y=catalog&&p.key==="tower"?(27+index*(62/14)).toFixed(3):"";
-      return `<button type="button" data-floor="${n}" ${y?`style="--floor-y:${y}%"`:""} aria-label="${n} ${word}"><span>${n}</span><i>${word}</i></button>`;
+      const hits=counts?counts.get(n)||0:null;
+      if(hits===0)return `<button type="button" class="is-empty" disabled aria-label="${n} ${word} · 0 ${t("apt")}"><span>${n}</span><i>${word}</i></button>`;
+      return `<button type="button" data-floor="${n}" class="${hits?"is-match":""}" ${y?`style="--floor-y:${y}%"`:""} aria-label="${n} ${word}${hits?` · ${hits} ${t("apt")}`:""}"><span>${n}</span><i>${word}</i>${hits?`<b>${hits}</b>`:""}</button>`;
     }).join("");
   }
 
-  function floorStage(p,{catalog=false,floors=[]}={}) {
+  // Сколько квартир проходит фильтр на каждом этаже. null, когда фильтр не
+  // сужает выбор: один только выбранный проект подсвечивать нечего.
+  function schemeFloorCounts(p,f) {
+    if(!f)return null;
+    const narrowed=f.rooms.length||f.areaMin||f.areaMax||f.priceMin||f.priceMax||(f.status&&f.status!=="all");
+    if(!narrowed)return null;
+    const counts=new Map();
+    filterUnits({...f,project:p.key,floors:[]}).forEach(u=>counts.set(u.floor,(counts.get(u.floor)||0)+1));
+    return counts;
+  }
+
+  function floorStage(p,{catalog=false,floors=[],counts=null}={}) {
     const unitFloors=[...new Set(D.units.filter(u=>u.project===p.key).map(u=>u.floor))].sort((x,y)=>y-x);
     const fullList=catalog&&p.key==="tower"?Array.from({length:15},(_,index)=>16-index):unitFloors;
     // Этажи из фильтра: остальные на фасаде не подсвечиваем и не открываем.
@@ -441,8 +459,8 @@
     if (!floorList.length) return "";
     // Позиции кнопок башни считаются от полного списка, иначе отфильтрованный
     // этаж уехал бы к крыше.
-    const floorButtons=buildFloorButtons(floorList,fullList,catalog,p);
-    const overlay=facadeFloors(p,floorList);
+    const floorButtons=buildFloorButtons(floorList,fullList,catalog,p,counts);
+    const overlay=facadeFloors(p,floorList,counts);
     const rail=`<div class="floor-rail" aria-label="${t("chooseFloor")}">${floorButtons}</div>`;
     // once the floors are clickable on the render itself no rail is drawn -
     // a lone leftover button floating over the facade only cluttered it
@@ -450,7 +468,17 @@
     const facadeContent=overlay
       ?`<div class="facade-image-stage facade-image-stage--mapped" aria-label="${t("chooseFloor")}"><img src="${a(p.facade)}" alt="${p.name}">${overlay}${railWithOverlay}</div>`
       :(catalog?`<div class="facade-image-stage"><img src="${a(p.facade)}" alt="${p.name}"><div class="floor-rail" aria-label="${t("chooseFloor")}">${floorButtons}</div></div>`:`<img src="${a(p.facade)}" alt="${p.name}"><div class="floor-rail" aria-label="${t("chooseFloor")}">${floorButtons}</div>`);
-    return `<div class="floor-stage" data-floor-stage data-project="${p.key}" data-catalog-scheme="${catalog}"><div class="facade-view">${facadeContent}<div class="facade-caption"><span>${p.name}</span><strong>${t("chooseFloor")}</strong></div></div></div>`;
+    return `<div class="floor-stage" data-floor-stage data-project="${p.key}" data-catalog-scheme="${catalog}"><div class="facade-view">${facadeContent}<div class="facade-caption"><span>${p.name}</span><strong>${t("chooseFloor")}</strong></div></div>${floorMatchChips(floorList,counts)}</div>`;
+  }
+
+  // Список этажей, где есть подходящие квартиры. Без него по фасаду не понять,
+  // какой этаж открывать: подсветка подсказывает, а строка называет прямо.
+  function floorMatchChips(floorList,counts) {
+    if(!counts)return "";
+    const word=lang==="ru"?"этаж":"հարկ";
+    const hits=floorList.filter(n=>counts.get(n));
+    if(!hits.length)return `<p class="facade-matches facade-matches--empty">${t("facadeNoMatches")}</p>`;
+    return `<div class="facade-matches"><span>${t("facadeMatches")}</span>${hits.map(n=>`<button type="button" data-floor="${n}">${n} ${word}<b>${counts.get(n)}</b></button>`).join("")}</div>`;
   }
 
   function floorSelector(p) {
@@ -822,7 +850,7 @@
     // чертёж берём с этажа, а не из выборки: иначе строгий фильтр прятал план
     floorImage=floorUnits.find(unit=>unit.floorImage)?.floorImage,catalogBack=catalog?`<button type="button" class="back-button back-button--catalog" data-catalog-view="list">${icon("back")}${t("catalogBack")}</button>`:"",emptyAction=catalog?`<button class="text-link" type="button" data-catalog-view="list">${t("catalogBack")}${icon("arrow")}</button>`:`<a class="text-link" href="${link(`apartments.html?project=${p.key}`)}">${t("catalogOpen")}${icon("arrow")}</a>`,emptyState=units.length?"":`<div class="floor-no-units"><p>${t("floorNoUnits")}</p>${emptyAction}</div>`;
     stage.innerHTML=`<div class="floor-plan-view"><div class="floor-plan-nav"><button type="button" class="back-button" data-floor-back>${icon("back")}${t("back")}</button>${catalogBack}</div><div class="floor-plan-copy"><span>${floor} ${lang==="ru"?"этаж":"հարկ"}</span><h3>${p.name} · ${t("floorPlan")}</h3><p>${t("planNote")}</p></div>${floorImage?`<div class="floor-plan-visual">${floorCanvas(p,floor,floorUnits,floorImage,matched)}<span>${floor} ${lang==="ru"?"этаж":"հարկ"} · ${units.length} ${t("apt")}</span></div>${floorLegend(p,floor,floorUnits,matched)}`:emptyState}<div class="floor-unit-list unit-list">${units.map(unitRow).join("")}</div></div>`;
-    stage.querySelector("[data-floor-back]").addEventListener("click",()=>{const fresh=document.createElement("div");fresh.innerHTML=floorStage(p,{catalog,floors:catalog?catalogSchemeFloors(catalogFilterState()):[]});const newStage=fresh.querySelector("[data-floor-stage]");stage.replaceWith(newStage);bindFloorButtons(newStage);});
+    stage.querySelector("[data-floor-back]").addEventListener("click",()=>{const fresh=document.createElement("div");fresh.innerHTML=floorStage(p,{catalog,floors:catalog?catalogSchemeFloors(catalogFilterState()):[],counts:catalog?schemeFloorCounts(p,catalogFilterState()):null});const newStage=fresh.querySelector("[data-floor-stage]");stage.replaceWith(newStage);bindFloorButtons(newStage);});
     bindCatalogModes();bindBookingButtons();bindMortgageButtons();bindUnitDetailButtons();bindUnitCardMedia();
   }
 
