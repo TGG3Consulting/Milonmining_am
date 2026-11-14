@@ -19,6 +19,7 @@
       "finish-real-alt.jpg": "https://api.milonmining.am/storage/designs/1/ef223568-3d40-41ae-b1e0-19c468cd8737.jpg",
       "finish-real.jpg": "https://api.milonmining.am/storage/designs/1/7b6a3c15-12c7-439c-b9dd-b8fc8793e01c.jpg",
       "hl-card-h.jpg": "assets/milon-hills-fasad.jpg",
+      "inst-card.jpg": "assets/milon-installment.jpg",
       "hl-gal-1.jpg": "https://api.milonmining.am/storage/buildings/1/a02868a1-d9fa-4a46-8ce8-4bfae563c7b2.png",
       "hl-gal-2.jpg": "https://api.milonmining.am/storage/buildings/1/7e2b3fb2-22a1-4d75-a58f-053730753921.png",
       "hl-gal-3.jpg": "https://api.milonmining.am/storage/buildings/1/7ec1234d-8e91-41d7-90f5-52afeae69be6.png",
@@ -178,7 +179,7 @@
       {
         id: "installment",
         slug: "installment",
-        image: "hl-card-h.jpg",
+        image: "inst-card.jpg",
         startDate: "2026-01-01T00:00:00+04:00",
         endDate: null,
         projects: ["tower", "hills", "townhouse"],
