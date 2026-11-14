@@ -21,10 +21,10 @@
   <meta name="twitter:title" content="Milon Mining — բնակելի նախագծեր Հայաստանում">
   <meta name="twitter:description" content="Milon Mining — բնակելի նախագծեր Աբովյանում և Առինջում։ Բնակարանների ընտրություն, նախագծեր և կապ։">
   <meta name="twitter:image" content="https://milonmining.am/assets/og-image.jpg">
-  <link rel="icon" href="/assets/favicon.ico?v=62" sizes="any">
-  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png?v=62">
+  <link rel="icon" href="/assets/favicon.ico?v=63" sizes="any">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png?v=63">
   <link rel="manifest" href="/assets/site.webmanifest">
-  <link rel="stylesheet" href="styles.css?v=62">
+  <link rel="stylesheet" href="styles.css?v=63">
   <style id="home-iteration-1">
     body[data-page="home"] {
       --ink: #1d283e;
@@ -490,7 +490,7 @@
       }
     }
   </style>
-  <script src="site-data.js?v=62" defer></script>
+  <script src="site-data.js?v=63" defer></script>
   <!-- Page-local copy of the existing runtime: portable paths without changing shared site.js. -->
   <script id="home-runtime">
     document.addEventListener("DOMContentLoaded", () => {
@@ -771,7 +771,7 @@
 
   function unitRow(u) {
     const p=D.projects[u.project], planSrc=u.planImage?a(u.planImage):a("plan-placeholder.svg"), planAlt=u.planImage?(lang==="ru"?`Планировка квартиры ${u.id}`:`${u.id} բնակարանի հատակագիծ`):(lang==="ru"?"Планировка будет добавлена":"Հատակագիծը կավելացվի");
-    return `<article class="unit-row" data-unit="${u.id}"><div class="unit-plan"><small>${lang==="ru"?"Планировка":"Հատակագիծ"}</small><img src="${planSrc}" alt="${esc(planAlt)}" loading="lazy"></div><div class="unit-status"><span class="status status--${u.status}">${t(u.status)}</span></div><div class="unit-project"><small>${t("project")}</small><strong>${p.name}</strong></div><div><small>${t("no")}</small><strong>${u.id}</strong></div><div><small>${t("rooms")}</small><strong>${u.rooms}</strong></div><div><small>${t("area")}</small><strong>${sqm(u.area)}</strong></div>${u.terrace?`<div><small>${t("terrace")}</small><strong>${sqm(u.terrace)}</strong></div>`:""}<div><small>${t("floor")}</small><strong>${u.floor} / ${u.totalFloors}</strong></div><div class="unit-price"><small>${t("price")}</small><strong>${u.price?money(u.price):"—"}</strong>${u.oldPrice?`<span><s>${money(u.oldPrice)}</s> −${u.discount}%</span>`:""}</div><div class="unit-actions">${canBook(u)?`<button class="button button--outline book-button" type="button" data-book="${u.id}">${t("book")}${icon("arrow")}</button>`:""}<button class="mortgage-button" type="button" data-mortgage-open="${u.id}">${t("calculateMortgage")}</button></div></article>`;
+    return `<article class="unit-row" data-unit="${u.id}"><div class="unit-plan"><small>${lang==="ru"?"Планировка":"Հատակագիծ"}</small><img src="${planSrc}" alt="${esc(planAlt)}" loading="lazy"></div><div class="unit-status"><span class="status status--${u.status}">${t(u.status)}</span></div><div class="unit-project"><small>${t("project")}</small><strong>${p.name}</strong></div><div><small>${t("no")}</small><strong>${u.id}</strong></div><div><small>${t("rooms")}</small><strong>${u.rooms}</strong></div><div><small>${t("area")}</small><strong>${sqm(u.area)}</strong></div>${u.terrace?`<div><small>${t("terrace")}</small><strong>${sqm(u.terrace)}</strong></div>`:""}<div><small>${t("floor")}</small><strong>${u.floor} / ${u.totalFloors}</strong></div><div class="unit-price"><small>${t("price")}</small><strong>${unitPrice(u)}</strong>${showsPrice(u)&&u.oldPrice?`<span><s>${money(u.oldPrice)}</s> −${u.discount}%</span>`:""}</div><div class="unit-actions">${canBook(u)?`<button class="button button--outline book-button" type="button" data-book="${u.id}">${t("book")}${icon("arrow")}</button>`:""}${showsPrice(u)?`<button class="mortgage-button" type="button" data-mortgage-open="${u.id}">${t("calculateMortgage")}</button>`:""}</div></article>`;
   }
 
   function catalogPage() {
@@ -999,6 +999,11 @@
   // A sold apartment cannot be reserved. The button is withheld below and
   // this refuses too, so no stale markup can reopen the form.
   function canBook(unit) { return unit && unit.status !== "sold"; }
+  // Проданная квартира цену не показывает: она уже не продаётся, а цифра в
+  // карточке читается как действующее предложение. Скидка и ипотека вместе с
+  // ней — считать нечего.
+  function showsPrice(unit) { return !!(unit && unit.status !== "sold" && unit.price); }
+  function unitPrice(unit) { return showsPrice(unit) ? money(unit.price) : "—"; }
   function openBooking(id) { const u=D.units.find(x=>x.id===id),d=document.querySelector("[data-booking-dialog]");if(!u||!d||!canBook(u))return;d.querySelector("[data-selected-unit]").innerHTML=`<span>${t("selected")}</span><strong>${D.projects[u.project].name} · № ${u.id}</strong><small>${u.rooms} ${lang==="ru"?"комн.":"սեն."} · ${sqm(u.area)} · ${u.floor} ${lang==="ru"?"этаж":"հարկ"} · ${money(u.price)}</small>`;d.querySelector("[data-booking-form]").innerHTML=leadForm({project:D.projects[u.project].name,apartment:u.id});bindLead(d.querySelector("[data-lead-form]"));d.showModal(); }
 
   function openMortgage(id) {
