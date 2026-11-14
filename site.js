@@ -13,6 +13,9 @@
   const CATALOG_PAGE_SIZE = 12;
   let catalogPageNumber = Math.max(1, Number.parseInt(query.get("page") || "1", 10) || 1);
   let catalogSchemeProject = "";
+  // Проект и этажи фильтра, на которых построена текущая схема: пока они
+  // не изменились, перерисовывать её при каждом нажатии незачем.
+  let catalogSchemeSignature = "";
 
   const C = {
     hy: {
@@ -328,15 +331,33 @@
     return Object.values(D.projects).filter(p=>D.units.some(u=>u.project===p.key));
   }
 
+  // The filters are read from the live form when there is one, and from the
+  // address bar on the first render, before the catalogue exists in the DOM.
+  function catalogFilterState() {
+    const form=document.querySelector('[data-finder][data-mode="catalog"]');
+    return form?readFilters(form):filters();
+  }
+
+  function catalogSchemeFloors(f) {
+    return (f.floors||[]).map(Number).filter(Number.isFinite);
+  }
+
   // The scheme used to be hard-coded to Milon Tower, so the catalog showed the
-  // Tower facade whichever project you picked. It now follows the selection.
+  // Tower facade whichever project you picked. It now follows the selection,
+  // and with it the rest of the filter: picking one project drops the other
+  // building's button, picking floors leaves only those floors on the facade.
   function catalogSchemeView() {
-    const list=schemeProjects();
-    if(!list.length)return "";
+    const f=catalogFilterState();
+    catalogSchemeSignature=`${f.project}|${(f.floors||[]).join(",")}`;
+    const all=schemeProjects();
+    const list=f.project&&f.project!=="all"?all.filter(p=>p.key===f.project):all;
+    if(!list.length)return `<div class="empty-state">${t("empty")}</div>`;
     const current=list.find(p=>p.key===catalogSchemeProject)||list[0];
     catalogSchemeProject=current.key;
-    const tabs=list.map(p=>`<button type="button" class="${p.key===current.key?"is-active":""}" data-scheme-project="${p.key}" aria-pressed="${p.key===current.key}">${esc(p.name)}</button>`).join("");
-    return `<div class="catalog-scheme-switch" role="group" aria-label="${t("towerChooseT")}">${tabs}</div><p class="catalog-scheme-note"><strong>${esc(current.name)}</strong> · ${t("catalogSchemeIntro")}</p><div data-scheme-stage>${floorStage(current,{catalog:true})}</div>`;
+    const stage=floorStage(current,{catalog:true,floors:catalogSchemeFloors(f)});
+    if(!stage)return `<div class="empty-state">${t("empty")}</div>`;
+    const tabs=list.length<2?"":`<div class="catalog-scheme-switch" role="group" aria-label="${t("towerChooseT")}">${list.map(p=>`<button type="button" class="${p.key===current.key?"is-active":""}" data-scheme-project="${p.key}" aria-pressed="${p.key===current.key}">${esc(p.name)}</button>`).join("")}</div>`;
+    return `${tabs}<p class="catalog-scheme-note"><strong>${esc(current.name)}</strong> · ${t("catalogSchemeIntro")}</p><div data-scheme-stage>${stage}</div>`;
   }
 
   function catalogPage() {
@@ -412,11 +433,15 @@
     }).join("");
   }
 
-  function floorStage(p,{catalog=false}={}) {
+  function floorStage(p,{catalog=false,floors=[]}={}) {
     const unitFloors=[...new Set(D.units.filter(u=>u.project===p.key).map(u=>u.floor))].sort((x,y)=>y-x);
-    const floorList=catalog&&p.key==="tower"?Array.from({length:15},(_,index)=>16-index):unitFloors;
+    const fullList=catalog&&p.key==="tower"?Array.from({length:15},(_,index)=>16-index):unitFloors;
+    // Этажи из фильтра: остальные на фасаде не подсвечиваем и не открываем.
+    const floorList=floors.length?fullList.filter(n=>floors.includes(n)):fullList;
     if (!floorList.length) return "";
-    const floorButtons=buildFloorButtons(floorList,floorList,catalog,p);
+    // Позиции кнопок башни считаются от полного списка, иначе отфильтрованный
+    // этаж уехал бы к крыше.
+    const floorButtons=buildFloorButtons(floorList,fullList,catalog,p);
     const overlay=facadeFloors(p,floorList);
     const rail=`<div class="floor-rail" aria-label="${t("chooseFloor")}">${floorButtons}</div>`;
     // once the floors are clickable on the render itself no rail is drawn -
@@ -562,6 +587,7 @@
     document.querySelectorAll("[data-milon-map]").forEach(container=>{if(container.__milonMap)container.__milonMap.setLanguage(lang);else if(window.MilonMap)window.MilonMap.create(container,{lang,assetsBase:container.dataset.assets});});
     bindCatalogModes();
     bindCatalogScheme();
+    openSingleSchemeFloor(document.querySelector("[data-catalog-scheme-view]"));
     const catalogFinder=document.querySelector('[data-finder][data-mode="catalog"]');
     if(catalogFinder)syncCatalogTowerTools(catalogFinder);
   }
@@ -598,6 +624,18 @@
     if(!view)return;
     view.innerHTML=catalogSchemeView();
     bindCatalogScheme(); bindFloorButtons(view);
+    openSingleSchemeFloor(view);
+  }
+
+  // Ровно один этаж в фильтре — показывать здание целиком незачем, открываем
+  // сразу его план.
+  function openSingleSchemeFloor(root) {
+    if(!root)return;
+    const floors=catalogSchemeFloors(catalogFilterState());
+    if(floors.length!==1)return;
+    const stage=root.querySelector("[data-floor-stage]");
+    if(!stage||!stage.querySelector(`[data-floor="${floors[0]}"]`))return;
+    showFloor(stage,floors[0]);
   }
 
   function bindCatalogScheme() {
@@ -623,8 +661,9 @@
 
   function updateCatalog() {
     const form=document.querySelector('[data-finder][data-mode="catalog"]'),list=document.querySelector("[data-unit-list]");if(!form||!list)return;const sort=document.querySelector("[data-sort]")?.value||"floor-desc",units=sortCatalogUnits(filterUnits(readFilters(form)),sort),pages=Math.max(1,Math.ceil(units.length/CATALOG_PAGE_SIZE));catalogPageNumber=Math.min(pages,Math.max(1,catalogPageNumber));list.innerHTML=catalogCards(units);const count=document.querySelector("[data-catalog-count]");if(count)count.textContent=units.length;const pagination=document.querySelector("[data-catalog-pagination-root]");if(pagination)pagination.innerHTML=catalogPagination(units.length);const url=new URL(location.href);catalogPageNumber>1?url.searchParams.set("page",String(catalogPageNumber)):url.searchParams.delete("page");try{history.replaceState({},"",url);}catch(error){if(location.protocol!=="file:")throw error;}bindBookingButtons();bindMortgageButtons();bindUnitDetailButtons();bindUnitCardMedia();bindCatalogPagination();
-    const picked=readFilters(form).project;
-    if(picked && picked!=="all" && D.projects[picked] && picked!==catalogSchemeProject){catalogSchemeProject=picked;renderCatalogScheme();}
+    const f=readFilters(form);
+    if(f.project && f.project!=="all" && D.projects[f.project])catalogSchemeProject=f.project;
+    if(`${f.project}|${f.floors.join(",")}`!==catalogSchemeSignature)renderCatalogScheme();
   }
 
   function bindCatalogPagination() {
@@ -767,7 +806,7 @@
     if(!stage)return;
     const p=D.projects[stage.dataset.project],catalog=stage.dataset.catalogScheme==="true",catalogForm=catalog?document.querySelector('[data-finder][data-mode="catalog"]'):null,catalogFilters=catalogForm?{...readFilters(catalogForm),project:p.key}:null,sourceUnits=catalog&&catalogFilters?filterUnits(catalogFilters):D.units,units=sourceUnits.filter(u=>u.project===p.key&&u.floor===floor),floorImage=units.find(unit=>unit.floorImage)?.floorImage,catalogBack=catalog?`<button type="button" class="back-button back-button--catalog" data-catalog-view="list">${icon("back")}${t("catalogBack")}</button>`:"",emptyAction=catalog?`<button class="text-link" type="button" data-catalog-view="list">${t("catalogBack")}${icon("arrow")}</button>`:`<a class="text-link" href="${link(`apartments.html?project=${p.key}`)}">${t("catalogOpen")}${icon("arrow")}</a>`,emptyState=units.length?"":`<div class="floor-no-units"><p>${t("floorNoUnits")}</p>${emptyAction}</div>`;
     stage.innerHTML=`<div class="floor-plan-view"><div class="floor-plan-nav"><button type="button" class="back-button" data-floor-back>${icon("back")}${t("back")}</button>${catalogBack}</div><div class="floor-plan-copy"><span>${floor} ${lang==="ru"?"этаж":"հարկ"}</span><h3>${p.name} · ${t("floorPlan")}</h3><p>${t("planNote")}</p></div>${floorImage?`<div class="floor-plan-visual">${floorCanvas(p,floor,units,floorImage)}<span>${floor} ${lang==="ru"?"этаж":"հարկ"} · ${units.length} ${t("apt")}</span></div>${floorLegend(p,floor,units)}`:emptyState}<div class="floor-unit-list unit-list">${units.map(unitRow).join("")}</div></div>`;
-    stage.querySelector("[data-floor-back]").addEventListener("click",()=>{const fresh=document.createElement("div");fresh.innerHTML=floorStage(p,{catalog});const newStage=fresh.querySelector("[data-floor-stage]");stage.replaceWith(newStage);bindFloorButtons(newStage);});
+    stage.querySelector("[data-floor-back]").addEventListener("click",()=>{const fresh=document.createElement("div");fresh.innerHTML=floorStage(p,{catalog,floors:catalog?catalogSchemeFloors(catalogFilterState()):[]});const newStage=fresh.querySelector("[data-floor-stage]");stage.replaceWith(newStage);bindFloorButtons(newStage);});
     bindCatalogModes();bindBookingButtons();bindMortgageButtons();bindUnitDetailButtons();bindUnitCardMedia();
   }
 
