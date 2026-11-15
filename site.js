@@ -824,6 +824,17 @@
   function floorShapes(plan,units) {
     const byId=new Map(units.map(u=>[u.id,u]));
     const byLabel=new Map(units.map(u=>[planLabel(u.number||u.id),u]));
+    // CRM держит две объединённые квартиры одной записью — "286+287", — а на
+    // чертеже они подписаны по отдельности. Каждая половина ведёт на ту же
+    // запись, но только если своей записи под этим номером нет.
+    for(const u of units) {
+      const number=String(u.number||"");
+      if(number.indexOf("+")<0)continue;
+      for(const part of number.split("+")) {
+        const key=planLabel(part);
+        if(key&&!byLabel.has(key))byLabel.set(key,u);
+      }
+    }
     const drawn=plan.plan||units.map(u=>({u:u.id,p:plan.units[u.id]})).filter(x=>x.p);
     return drawn.map(item=>({item,unit:(item.u&&byId.get(item.u))||byLabel.get(planLabel(item.n))||null}));
   }
