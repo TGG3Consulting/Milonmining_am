@@ -38,6 +38,9 @@ const STATUS_MAP = {
   active:   'available',
   reserved: 'reserved',
   sold:     'sold',
+  // The CRM stage the sales team calls "not for sale". Published since it is
+  // drawn on the floor plans; the site shows it in red, without a price.
+  pending:  'unavailable',
 };
 
 async function apiGet(endpoint, params = {}) {
@@ -131,7 +134,8 @@ for (const building of buildings) {
       price:       hasDiscount && discPrice != null ? discPrice : price,
       oldPrice:    hasDiscount && price != null ? price : null,
       discount:    apt.discount ?? 0,
-      status:      STATUS_MAP[rawStatus] ?? 'available',
+      // An unrecognised status must never default to for-sale.
+      status:      STATUS_MAP[rawStatus] ?? 'unavailable',
       planImage:   apt.parent_image ?? null,
       floorImage:  apt.image        ?? null,
     });
