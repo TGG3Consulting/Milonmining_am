@@ -811,13 +811,28 @@
   // `units` — весь этаж, `matched` — то, что прошло фильтр (null, если фильтра
   // нет). Чертёж обводится целиком: квартиры мимо фильтра остаются на месте,
   // но приглушены и не реагируют ни на наведение, ни на клик.
+  // Номер, напечатанный на чертеже, в единообразном виде. Часть планов
+  // подписана латиницей — "23a" вместо "23ա", — и по такой подписи квартира
+  // не находилась.
+  function planLabel(value) {
+    return String(value==null?"":value).toLowerCase().replace(/\s+/g,"").replace(/a/g,"ա").replace(/[^0-9ա-ֆ+]/g,"");
+  }
+
+  // Фигура с чертежа и квартира за ней: сперва по id, затем по номеру. Без
+  // второго шага квартира в продаже оставалась серой «нет данных», а в
+  // легенде её не было — счётчики расходились со списком под планом.
+  function floorShapes(plan,units) {
+    const byId=new Map(units.map(u=>[u.id,u]));
+    const byLabel=new Map(units.map(u=>[planLabel(u.number||u.id),u]));
+    const drawn=plan.plan||units.map(u=>({u:u.id,p:plan.units[u.id]})).filter(x=>x.p);
+    return drawn.map(item=>({item,unit:(item.u&&byId.get(item.u))||byLabel.get(planLabel(item.n))||null}));
+  }
+
   function floorCanvas(p,floor,units,floorImage,matched) {
     const img=`<img src="${a(floorImage)}" alt="${esc(`${t("floorPlan")} ${floor}`)}">`;
     const plan=window.MILON_FLOORPLANS&&window.MILON_FLOORPLANS[`${p.key}-${floor}`];
     if(!plan)return img;
-    const drawn=plan.plan||units.map(u=>({u:u.id,p:plan.units[u.id]})).filter(x=>x.p);
-    const shapes=drawn.map(item=>{
-      const u=item.u?units.find(x=>x.id===item.u):null;
+    const shapes=floorShapes(plan,units).map(({item,unit:u})=>{
       const label=u?`${unitNumber(u)} · ${sqm(u.area)} · ${u.rooms} ${lang==="ru"?"комн.":"սեն."} · ${unitPrice(u)}`
         :[item.n,t("statusUnknown")].filter(Boolean).join(" · ");
       const off=u&&matched&&!matched.has(u.id);
@@ -838,13 +853,14 @@
   function floorLegend(p,floor,units,matched) {
     const plan=window.MILON_FLOORPLANS&&window.MILON_FLOORPLANS[`${p.key}-${floor}`];
     if(!plan)return "";
-    const marked=units.filter(u=>plan.units[u.id]);
-    if(!marked.length)return "";
-    const live=matched?marked.filter(u=>matched.has(u.id)):marked;
+    if(!units.length)return "";
+    // Считаем по этажу, а не по индексу чертежа: квартира без фигуры всё
+    // равно стоит в списке под планом, и легенда расходилась с ним.
+    const live=matched?units.filter(u=>matched.has(u.id)):units;
     const rows=["available","reserved","sold"].map(s=>({s,n:live.filter(u=>u.status===s).length})).filter(x=>x.n);
-    const off=marked.length-live.length;
+    const off=units.length-live.length;
     if(off)rows.push({s:"muted",n:off,label:t("statusFiltered")});
-    const unknown=(plan.plan||[]).filter(item=>!item.u||!units.some(u=>u.id===item.u)).length;
+    const unknown=floorShapes(plan,units).filter(shape=>!shape.unit).length;
     if(unknown)rows.push({s:"unknown",n:unknown,label:t("statusUnknown")});
     return `<ul class="floor-legend">${rows.map(x=>`<li class="floor-legend__item floor-legend__item--${x.s}"><i aria-hidden="true"></i>${x.label||t(x.s)}<b>${x.n}</b></li>`).join("")}</ul>`;
   }
