@@ -753,6 +753,22 @@ body[data-page="offer"]:not([data-offer="mortgage-calculator"]) .offer-card__cop
   background: #00a387;
 }
 
+/* Everywhere else this is a plain green link, and its padding-top is the gap
+   above it. Here it is painted as a button, so that gap became part of the
+   button itself and left the label sitting on its bottom edge. It gets even
+   padding and a centred label; the gap above now comes from the paragraph,
+   which also keeps margin-top:auto free to align the two cards' buttons. */
+body[data-page="offer"]:not([data-offer="mortgage-calculator"]) .offer-card__copy em {
+  justify-content: center;
+  min-height: 46px;
+  padding: 12px 18px;
+  border-radius: 999px;
+}
+
+body[data-page="offer"]:not([data-offer="mortgage-calculator"]) .offer-card__copy p {
+  margin-bottom: 18px;
+}
+
 body[data-page="offer"]:not([data-offer="mortgage-calculator"]) .offer-actions .button--outline {
   border-color: #1d283e;
   color: #1d283e;
